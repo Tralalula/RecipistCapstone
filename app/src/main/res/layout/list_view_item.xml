@@ -5,20 +5,19 @@
     android:layout_height="56dp"
     android:gravity="center_vertical|start"
     android:orientation="horizontal"
-    android:paddingEnd="16dp"
-    android:paddingStart="16dp">
+    android:layout_margin="4dp">
 
     <ImageView
         android:id="@+id/ia_item_icon"
-        android:layout_width="36dp"
-        android:layout_height="36dp"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:scaleType="fitXY"
         android:src="@android:drawable/ic_menu_edit" />
 
     <TextView
         android:id="@+id/lbl_item_text"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
-        android:gravity="center"
         android:paddingEnd="8dp"
         android:paddingStart="8dp" />
 

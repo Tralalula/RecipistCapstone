@@ -13,17 +13,17 @@ import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
-import data.ListViewItem;
+import data.RecipeViewItem;
 
 /**
  * Created by Tobias on 09-06-2016.
  */
 public class ListViewAdapter extends RecyclerView.Adapter<ListViewAdapter.ListViewHolder> {
     private Context mContext;
-    private List<ListViewItem> listData;
+    private List<RecipeViewItem> listData;
     private LayoutInflater inflater;
 
-    public ListViewAdapter(List<ListViewItem> listData, Context context) {
+    public ListViewAdapter(Context context, List<RecipeViewItem> listData) {
         this.inflater = LayoutInflater.from(context);
         this.listData = listData;
         mContext = context;
@@ -38,7 +38,7 @@ public class ListViewAdapter extends RecyclerView.Adapter<ListViewAdapter.ListVi
 
     @Override
     public void onBindViewHolder(ListViewHolder holder, int position) {
-        ListViewItem item = listData.get(position);
+        RecipeViewItem item = listData.get(position);
         holder.title.setText(item.getTitle());
 
         Picasso.with(mContext)

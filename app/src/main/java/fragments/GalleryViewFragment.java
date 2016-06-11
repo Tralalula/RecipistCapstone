@@ -2,43 +2,51 @@ package fragments;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.GridView;
-import android.widget.TextView;
 
 import com.example.tobias.recipist.R;
 
-import adapters.ImageAdapter;
+import java.util.ArrayList;
+import java.util.List;
+
+import adapters.GalleryViewAdapter;
+import data.RecipeViewItem;
 
 /**
- * Created by Tobias on 09-06-2016.
+ * Created by Tobias on 10-06-2016.
  */
 public class GalleryViewFragment extends Fragment {
-    private ImageAdapter mImageAdapter;
-    private boolean mRestoredState;
+    private RecyclerView mRecyclerView;
+    private RecyclerView.LayoutManager mLayoutManager;
+    private RecyclerView.Adapter mAdapter;
 
-    private Integer[] mThumbIds = {R.drawable.a, R.drawable.b, R.drawable.c};
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        mRecyclerView = (RecyclerView) inflater.inflate(R.layout.fragment_gallery_view, container, false);
 
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+        List<RecipeViewItem> recipeViewItems = getAllItemList();
+        mLayoutManager = new GridLayoutManager(mRecyclerView.getContext(), 2);
 
-        if (savedInstanceState != null) {
-            mRestoredState = true;
-        }
+        mRecyclerView.setHasFixedSize(true);
+        mRecyclerView.setLayoutManager(mLayoutManager);
+
+        mAdapter = new GalleryViewAdapter(mRecyclerView.getContext(), recipeViewItems);
+        mRecyclerView.setAdapter(mAdapter);
+
+        return mRecyclerView;
     }
 
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.fragment_gallery_view, container, false);
-
-        mImageAdapter = new ImageAdapter(getActivity());
-
-        GridView gridView = (GridView) rootView.findViewById(R.id.gridview);
-        gridView.setAdapter(mImageAdapter);
-
-        return rootView;
+    private List<RecipeViewItem> getAllItemList() {
+        List<RecipeViewItem> allItems = new ArrayList<>();
+        allItems.add(new RecipeViewItem("Apple Pie", R.drawable.a, "Completed", "45m"));
+        allItems.add(new RecipeViewItem("Halibut", R.drawable.b, "In Progress", "1h30m"));
+        allItems.add(new RecipeViewItem("Pork Chop", R.drawable.c, "Completed", "3h30m"));
+        allItems.add(new RecipeViewItem("Apple Pie", R.drawable.a, "Completed", "45m"));
+        allItems.add(new RecipeViewItem("Halibut", R.drawable.b, "In Progress", "1h30m"));
+        allItems.add(new RecipeViewItem("Pork Chop", R.drawable.c, "Completed", "3h30m"));
+        return allItems;
     }
 }

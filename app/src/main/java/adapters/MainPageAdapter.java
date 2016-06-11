@@ -4,7 +4,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 
-import fragments.GalleryViewFragment2;
+import fragments.GalleryViewFragment;
 import fragments.ListViewFragment;
 
 /**
@@ -24,7 +24,7 @@ public class MainPageAdapter extends FragmentStatePagerAdapter {
     public Fragment getItem(int position) {
         switch (position) {
             case 0:
-                return new GalleryViewFragment2();
+                return new GalleryViewFragment();
             case 1:
                 return new ListViewFragment();
             default:
