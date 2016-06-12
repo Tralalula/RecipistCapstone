@@ -10,4 +10,5 @@
     <color name="statusBarColor">#000</color>
     <color name="navigationBarColor">#000</color>
     <color name="windowBackground">#FFF</color>
+    <color name="windowBackgroundDark">#E2E2E2</color>
 </resources>

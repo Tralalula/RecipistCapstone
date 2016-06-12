@@ -21,8 +21,9 @@
             style="@style/TabLayoutStyle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:tabMode="fixed"
-            app:tabGravity="fill"/>
+            app:tabGravity="fill"
+            app:tabMaxWidth="0dp"
+            app:tabMode="fixed" />
     </android.support.design.widget.AppBarLayout>
 
     <android.support.v4.view.ViewPager xmlns:android="http://schemas.android.com/apk/res/android"

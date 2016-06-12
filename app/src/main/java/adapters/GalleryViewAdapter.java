@@ -1,6 +1,7 @@
 package adapters;
 
 import android.content.Context;
+import android.content.res.Configuration;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -31,7 +32,12 @@ public class GalleryViewAdapter extends RecyclerView.Adapter<GalleryViewAdapter.
 
     @Override
     public GalleryViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View layout = mInflater.inflate(R.layout.recipe_gallery_view_item, null);
+        View layout;
+        if (mContext.getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT) {
+            layout = mInflater.inflate(R.layout.recipe_gallery_view_item, null);
+        } else {
+            layout = mInflater.inflate(R.layout.recipe_gallery_landscape_view_item, null);
+        }
         return new GalleryViewHolder(layout);
     }
 

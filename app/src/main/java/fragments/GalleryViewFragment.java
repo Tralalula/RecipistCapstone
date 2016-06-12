@@ -1,5 +1,6 @@
 package fragments;
 
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
@@ -20,15 +21,23 @@ import data.RecipeViewItem;
  * Created by Tobias on 10-06-2016.
  */
 public class GalleryViewFragment extends Fragment {
+    int PORTRAIT_NUM_OF_RECIPES = 2;
+    int LANDSCAPE_NUM_OF_RECIPES = 3;
+
     private RecyclerView mRecyclerView;
     private RecyclerView.LayoutManager mLayoutManager;
     private RecyclerView.Adapter mAdapter;
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         mRecyclerView = (RecyclerView) inflater.inflate(R.layout.fragment_gallery_view, container, false);
+        mRecyclerView.setBackgroundColor(getResources().getColor(R.color.windowBackgroundDark));
 
         List<RecipeViewItem> recipeViewItems = getAllItemList();
-        mLayoutManager = new GridLayoutManager(mRecyclerView.getContext(), 2);
+        if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT) {
+            mLayoutManager = new GridLayoutManager(mRecyclerView.getContext(), PORTRAIT_NUM_OF_RECIPES);
+        } else {
+            mLayoutManager = new GridLayoutManager(mRecyclerView.getContext(), LANDSCAPE_NUM_OF_RECIPES);
+        }
 
         mRecyclerView.setHasFixedSize(true);
         mRecyclerView.setLayoutManager(mLayoutManager);
