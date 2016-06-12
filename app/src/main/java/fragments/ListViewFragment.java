@@ -14,7 +14,7 @@ import com.example.tobias.recipist.R;
 import java.util.ArrayList;
 import java.util.List;
 
-import adapters.ListViewAdapter;
+import adapters.RecipeViewAdapter;
 import data.RecipeViewItem;
 import util.ItemDivider;
 
@@ -22,6 +22,8 @@ import util.ItemDivider;
  * Created by Tobias on 09-06-2016.
  */
 public class ListViewFragment extends Fragment {
+    public static int FRAGMENT_ID = 11;
+
     private RecyclerView mRecyclerView;
     private RecyclerView.LayoutManager mLayoutManager;
     private RecyclerView.Adapter mAdapter;
@@ -38,7 +40,7 @@ public class ListViewFragment extends Fragment {
 
         mRecyclerView.addItemDecoration(new ItemDivider(recyclerViewContext));
 
-        mAdapter = new ListViewAdapter(recyclerViewContext, recipeViewItems);
+        mAdapter = new RecipeViewAdapter(recyclerViewContext, recipeViewItems, FRAGMENT_ID);
         mRecyclerView.setAdapter(mAdapter);
 
         return mRecyclerView;

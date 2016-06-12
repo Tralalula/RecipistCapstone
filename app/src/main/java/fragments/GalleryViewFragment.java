@@ -14,15 +14,17 @@ import com.example.tobias.recipist.R;
 import java.util.ArrayList;
 import java.util.List;
 
-import adapters.GalleryViewAdapter;
+import adapters.RecipeViewAdapter;
 import data.RecipeViewItem;
 
 /**
  * Created by Tobias on 10-06-2016.
  */
 public class GalleryViewFragment extends Fragment {
-    int PORTRAIT_NUM_OF_RECIPES = 2;
-    int LANDSCAPE_NUM_OF_RECIPES = 3;
+    public static int FRAGMENT_ID = 10;
+
+    private int PORTRAIT_NUM_OF_RECIPES = 2;
+    private int LANDSCAPE_NUM_OF_RECIPES = 3;
 
     private RecyclerView mRecyclerView;
     private RecyclerView.LayoutManager mLayoutManager;
@@ -42,7 +44,7 @@ public class GalleryViewFragment extends Fragment {
         mRecyclerView.setHasFixedSize(true);
         mRecyclerView.setLayoutManager(mLayoutManager);
 
-        mAdapter = new GalleryViewAdapter(mRecyclerView.getContext(), recipeViewItems);
+        mAdapter = new RecipeViewAdapter(mRecyclerView.getContext(), recipeViewItems, FRAGMENT_ID);
         mRecyclerView.setAdapter(mAdapter);
 
         return mRecyclerView;

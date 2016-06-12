@@ -15,28 +15,35 @@ import com.squareup.picasso.Picasso;
 import java.util.List;
 
 import data.RecipeViewItem;
+import fragments.GalleryViewFragment;
 
 /**
  * Created by Tobias on 10-06-2016.
  */
-public class GalleryViewAdapter extends RecyclerView.Adapter<GalleryViewAdapter.GalleryViewHolder> {
+public class RecipeViewAdapter extends RecyclerView.Adapter<RecipeViewAdapter.GalleryViewHolder> {
     private LayoutInflater mInflater;
     private List<RecipeViewItem> mListData;
     private Context mContext;
+    private int mFragmentId;
 
-    public GalleryViewAdapter(Context context, List<RecipeViewItem> itemList) {
+    public RecipeViewAdapter(Context context, List<RecipeViewItem> itemList, int fragmentId) {
         mInflater = LayoutInflater.from(context);
         mListData = itemList;
         mContext = context;
+        mFragmentId = fragmentId;
     }
 
     @Override
     public GalleryViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View layout;
-        if (mContext.getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT) {
-            layout = mInflater.inflate(R.layout.recipe_gallery_view_item, null);
+        if (mFragmentId == GalleryViewFragment.FRAGMENT_ID) {
+            if (mContext.getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT) {
+                layout = mInflater.inflate(R.layout.recipe_gallery_view_item, null);
+            } else {
+                layout = mInflater.inflate(R.layout.recipe_gallery_landscape_view_item, null);
+            }
         } else {
-            layout = mInflater.inflate(R.layout.recipe_gallery_landscape_view_item, null);
+            layout = mInflater.inflate(R.layout.recipe_list_view_item, parent, false);
         }
         return new GalleryViewHolder(layout);
     }

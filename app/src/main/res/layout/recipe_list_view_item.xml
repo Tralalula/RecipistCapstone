@@ -3,22 +3,35 @@
     android:id="@+id/cont_item_root"
     android:layout_width="match_parent"
     android:layout_height="56dp"
+    android:layout_margin="4dp"
     android:gravity="center_vertical|start"
-    android:orientation="horizontal"
-    android:layout_margin="4dp">
+    android:orientation="horizontal">
 
     <ImageView
-        android:id="@+id/ia_item_icon"
+        android:id="@+id/recipe_thumbnail"
         android:layout_width="80dp"
         android:layout_height="80dp"
         android:scaleType="fitXY"
         android:src="@android:drawable/ic_menu_edit" />
 
     <TextView
-        android:id="@+id/lbl_item_text"
+        android:id="@+id/recipe_title"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:paddingEnd="8dp"
         android:paddingStart="8dp" />
 
+    <TextView
+        android:id="@+id/recipe_progress"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:paddingEnd="8dp"
+        android:paddingStart="8dp" />
+
+    <TextView
+        android:id="@+id/recipe_time"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:paddingEnd="8dp"
+        android:paddingStart="8dp" />
 </LinearLayout>
