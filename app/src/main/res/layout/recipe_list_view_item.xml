@@ -5,7 +5,10 @@
     android:layout_height="56dp"
     android:layout_margin="4dp"
     android:gravity="center_vertical|start"
-    android:orientation="horizontal">
+    android:orientation="horizontal"
+    android:clickable="true"
+    android:focusable="true"
+    android:foreground="?selectableItemBackground">
 
     <ImageView
         android:id="@+id/recipe_thumbnail"
