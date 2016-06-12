@@ -1,5 +1,6 @@
 package fragments;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
@@ -15,6 +16,7 @@ import java.util.List;
 
 import adapters.ListViewAdapter;
 import data.RecipeViewItem;
+import util.ItemDivider;
 
 /**
  * Created by Tobias on 09-06-2016.
@@ -26,14 +28,17 @@ public class ListViewFragment extends Fragment {
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         mRecyclerView = (RecyclerView) inflater.inflate(R.layout.fragment_list_view, container, false);
+        Context recyclerViewContext = mRecyclerView.getContext();
 
         List<RecipeViewItem> recipeViewItems = getAllItemList();
-        mLayoutManager = new LinearLayoutManager(mRecyclerView.getContext());
+        mLayoutManager = new LinearLayoutManager(recyclerViewContext);
 
         mRecyclerView.setHasFixedSize(true);
         mRecyclerView.setLayoutManager(mLayoutManager);
 
-        mAdapter = new ListViewAdapter(mRecyclerView.getContext(), recipeViewItems);
+        mRecyclerView.addItemDecoration(new ItemDivider(recyclerViewContext));
+
+        mAdapter = new ListViewAdapter(recyclerViewContext, recipeViewItems);
         mRecyclerView.setAdapter(mAdapter);
 
         return mRecyclerView;
