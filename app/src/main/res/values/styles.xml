@@ -27,4 +27,9 @@
         <item name="android:textColor">@color/textColorSecondary</item>
         <item name="textAllCaps">true</item>
     </style>
+
+    <style name="DetailsToolbar">
+        <item name="android:textSize">18sp</item>
+        <item name="android:textColor">@color/textColorPrimary</item>
+    </style>
 </resources>

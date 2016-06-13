@@ -12,6 +12,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.tobias.recipist.R;
+import com.example.tobias.recipist.activities.CreateRecipeActivity;
+import com.example.tobias.recipist.activities.ViewRecipeActivity;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
@@ -51,7 +53,8 @@ public class RecipeViewAdapter extends RecyclerView.Adapter<RecipeViewAdapter.Re
         layout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(mContext, "lol", Toast.LENGTH_LONG).show();
+                Intent intent = new Intent(mContext, ViewRecipeActivity.class);
+                mContext.startActivity(intent);
             }
         });
 
