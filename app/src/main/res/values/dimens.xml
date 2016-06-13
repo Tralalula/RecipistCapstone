@@ -1,5 +1,62 @@
 <resources>
+    <!-- Common margin sizes -->
+    <dimen name="mini_margin">4dp</dimen>
+    <dimen name="small_margin">8dp</dimen>
+    <dimen name="standard_margin">16dp</dimen>
+
+    <!-- Common padding sizes -->
+    <dimen name="mini_padding">4dp</dimen>
+    <dimen name="small_padding">8dp</dimen>
+    <dimen name="standard_padding">16dp</dimen>
+
+    <!-- Common text sizes -->
+    <dimen name="standard_small_text_size">14sp</dimen>
+    <dimen name="standard_text_size">16sp</dimen>
+    <dimen name="medium_small_text_size">18sp</dimen>
+    <dimen name="medium_text_size">20sp</dimen>
+    <dimen name="large_text_size">24sp</dimen>
+
     <!-- Default screen margins, per the Android Design guidelines. -->
-    <dimen name="activity_horizontal_margin">16dp</dimen>
-    <dimen name="activity_vertical_margin">16dp</dimen>
+    <dimen name="activity_horizontal_margin">@dimen/standard_margin</dimen>
+    <dimen name="activity_vertical_margin">@dimen/standard_margin</dimen>
+
+    <!-- Recipe List Item -->
+    <dimen name="recipe_list_item_root_container_height">56dp</dimen>
+    <dimen name="recipe_list_item_root_container_margin">@dimen/mini_margin</dimen>
+
+    <dimen name="recipe_list_item_text_padding_horizontal">@dimen/small_padding</dimen>
+
+    <dimen name="recipe_list_item_title_padding_horizontal">
+        @dimen/recipe_list_item_text_padding_horizontal
+    </dimen>
+    <dimen name="recipe_list_item_title_text_size">@dimen/medium_small_text_size</dimen>
+
+    <dimen name="recipe_list_item_thumbnail_width">80dp</dimen>
+    <dimen name="recipe_list_item_thumbnail_height">80dp</dimen>
+
+    <dimen name="recipe_list_item_time_padding_horizontal">
+        @dimen/recipe_list_item_text_padding_horizontal
+    </dimen>
+    <dimen name="recipe_list_item_time_text_size">@dimen/standard_small_text_size</dimen>
+
+    <dimen name="recipe_list_item_progress_padding_horizontal">
+        @dimen/recipe_list_item_text_padding_horizontal
+    </dimen>
+    <dimen name="recipe_list_item_progress_text_size">@dimen/standard_small_text_size</dimen>
+
+    <!-- Recipe Gallery Item -->
+    <dimen name="recipe_gallery_item_card_view_width">80dp</dimen>
+    <dimen name="recipe_gallery_item_card_view_margin_bottom">@dimen/standard_margin</dimen>
+    <dimen name="recipe_gallery_item_card_view_card_corner_radius">2dp</dimen>
+
+    <dimen name="recipe_gallery_item_title_height">32dp</dimen>
+    <dimen name="recipe_gallery_item_title_padding">@dimen/mini_padding</dimen>
+    <dimen name="recipe_gallery_item_title_text_size">@dimen/medium_small_text_size</dimen>
+
+    <dimen name="recipe_gallery_item_progress_padding">@dimen/mini_padding</dimen>
+    <dimen name="recipe_gallery_item_progress_text_size">@dimen/standard_small_text_size</dimen>
+
+    <dimen name="recipe_gallery_item_time_padding">@dimen/mini_padding</dimen>
+    <dimen name="recipe_gallery_item_time_text_size">@dimen/standard_small_text_size</dimen>
+    <!-- Recipe Gallery Landscape Item -->
 </resources>
