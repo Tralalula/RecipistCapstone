@@ -32,7 +32,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="?actionBarSize"
                 android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
-                app:contentInsetStart="72dp"
+                app:contentInsetStart="@dimen/view_recipe_app_bar_content_inset_start"
                 app:layout_collapseMode="pin"
                 app:navigationIcon="@drawable/arrow_left" />
         </android.support.design.widget.CollapsingToolbarLayout>
@@ -42,6 +42,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:nestedScrollingEnabled="true"
+        android:padding="@dimen/view_recipe_scroll_view_padding"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
         <RelativeLayout
@@ -53,42 +54,59 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentStart="true"
-                android:text="Gooey Apple Pie" />
+                android:text="Gooey Apple Pie"
+                android:textColor="@color/textColorPrimary"
+                android:textSize="@dimen/view_recipe_title_text_size" />
 
             <TextView
                 android:id="@+id/recipe_progress"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"
-                android:text="In Progress" />
+                android:text="In Progress"
+                android:textColor="@color/textColorSecondary"
+                android:textSize="@dimen/view_recipe_progress_text_size" />
 
-            <TextView
-                android:id="@+id/recipe_time"
+            <LinearLayout
+                android:id="@+id/recipe_time_and_servings"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/recipe_title"
-                android:text="6h" />
+                android:layout_marginBottom="@dimen/view_recipe_time_and_servings_margin_bottom"
+                android:layout_marginTop="@dimen/view_recipe_time_and_servings_margin_top"
+                android:orientation="horizontal">
 
-            <TextView
-                android:id="@+id/recipe_servings"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/recipe_title"
-                android:layout_toEndOf="@+id/recipe_time"
-                android:text="8-12" />
+                <TextView
+                    android:id="@+id/recipe_time"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="6h"
+                    android:textColor="@color/textColorSecondary"
+                    android:textSize="@dimen/view_recipe_time_text_size" />
+
+                <TextView
+                    android:id="@+id/recipe_servings"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="8-12"
+                    android:textColor="@color/textColorSecondary"
+                    android:textSize="@dimen/view_recipe_servings_text_size" />
+            </LinearLayout>
 
             <LinearLayout
                 android:id="@+id/recipe_ingredients"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/recipe_time"
+                android:layout_below="@+id/recipe_time_and_servings"
                 android:orientation="vertical">
 
                 <TextView
-                    android:id="@+id/recipe_ingredients_text"
+                    android:id="@+id/recipe_ingredients_title"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Ingredients" />
+                    android:text="Ingredients"
+                    android:textColor="@color/textColorPrimary"
+                    android:textSize="@dimen/view_recipe_ingredients_title_text_size" />
 
                 <LinearLayout
                     android:id="@+id/recipe_ingredients_list"
@@ -96,17 +114,21 @@
                     android:layout_height="wrap_content"
                     android:background="@drawable/border"
                     android:orientation="vertical"
-                    android:padding="10dp">
+                    android:padding="4dp">
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="5 pounds apples, peeled, cored, and sliced 1/2 inch thick" />
+                        android:text="5 pounds apples, peeled, cored, and sliced 1/2 inch thick"
+                        android:textColor="@color/textColorSecondary"
+                        android:textSize="@dimen/view_recipe_ingredient_text_size" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="100-150g sugar, plus more for sprinkling" />
+                        android:text="100-150g sugar, plus more for sprinkling"
+                        android:textColor="@color/textColorSecondary"
+                        android:textSize="@dimen/view_recipe_ingredient_text_size" />
                 </LinearLayout>
             </LinearLayout>
 
@@ -121,48 +143,56 @@
                     android:id="@+id/recipe_method_title"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Method" />
+                    android:text="Method"
+                    android:textColor="@color/textColorPrimary"
+                    android:textSize="@dimen/view_recipe_method_title_text_size" />
 
                 <RelativeLayout
                     android:id="@+id/recipe_method_item"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@drawable/border"
-                    android:padding="10dp">
+                    android:padding="4dp"
+                    android:textColor="@color/textColorSecondary">
 
                     <TextView
                         android:id="@+id/recipe_method_number"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:background="@drawable/method_number"
+                        android:paddingBottom="3dp"
+                        android:paddingEnd="6dp"
+                        android:paddingStart="6dp"
+                        android:paddingTop="3dp"
+                        android:layout_marginEnd="8dp"
+                        android:text="1"
                         android:textColor="@android:color/white"
-                        android:paddingTop="4dp"
-                        android:paddingBottom="4dp"
-                        android:paddingStart="8dp"
-                        android:paddingEnd="8dp"
-                        android:text="1" />
+                        android:textSize="@dimen/view_recipe_method_number_text_size" />
 
                     <TextView
                         android:id="@+id/recipe_method_text"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_toEndOf="@+id/recipe_method_number"
-                        android:text="Adjust oven rack to lower middle position and place a heavy rimmed baking sheet on it. Preheat oven to 425F (220C). Toss apple slices with sugar, cornstarch, cinnamon, and lemon juice and zest untill well-coated. Let rest for 10 minutes" />
+                        android:text="Adjust oven rack to lower middle position and place a heavy rimmed baking sheet on it. Preheat oven to 425F (220C). Toss apple slices with sugar, cornstarch, cinnamon, and lemon juice and zest untill well-coated. Let rest for 10 minutes"
+                        android:textColor="@color/textColorSecondary"
+                        android:textSize="@dimen/view_recipe_method_text_size" />
 
                     <ImageView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_toEndOf="@+id/recipe_method_number"
                         android:layout_below="@+id/recipe_method_text"
-                        android:src="@drawable/b"/>
+                        android:layout_toEndOf="@+id/recipe_method_number"
+                        android:src="@drawable/b" />
 
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_below="@+id/recipe_method_number"
                         android:layout_toStartOf="@+id/recipe_method_text"
-                        android:text="10m"
-                        android:textSize="10sp"/>
+                        android:text="23h59m"
+                        android:textColor="@color/textColorSecondary"
+                        android:textSize="@dimen/view_recipe_method_timer_text_size" />
                 </RelativeLayout>
             </LinearLayout>
         </RelativeLayout>

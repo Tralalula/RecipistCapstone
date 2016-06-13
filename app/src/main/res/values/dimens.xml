@@ -59,4 +59,25 @@
     <dimen name="recipe_gallery_item_time_padding">@dimen/mini_padding</dimen>
     <dimen name="recipe_gallery_item_time_text_size">@dimen/standard_small_text_size</dimen>
     <!-- Recipe Gallery Landscape Item -->
+
+    <!-- View Recipe -->
+    <dimen name="view_recipe_app_bar_content_inset_start">72dp</dimen>
+
+    <dimen name="view_recipe_scroll_view_padding">@dimen/small_padding</dimen>
+
+    <dimen name="view_recipe_title_text_size">@dimen/medium_small_text_size</dimen>
+    <dimen name="view_recipe_progress_text_size">@dimen/standard_small_text_size</dimen>
+
+    <dimen name="view_recipe_time_and_servings_margin_top">2dp</dimen>
+    <dimen name="view_recipe_time_and_servings_margin_bottom">@dimen/small_margin</dimen>
+    <dimen name="view_recipe_time_text_size">@dimen/standard_small_text_size</dimen>
+    <dimen name="view_recipe_servings_text_size">@dimen/standard_small_text_size</dimen>
+
+    <dimen name="view_recipe_ingredients_title_text_size">@dimen/standard_text_size</dimen>
+    <dimen name="view_recipe_ingredient_text_size">@dimen/standard_small_text_size</dimen>
+
+    <dimen name="view_recipe_method_title_text_size">@dimen/standard_text_size</dimen>
+    <dimen name="view_recipe_method_number_text_size">@dimen/standard_small_text_size</dimen>
+    <dimen name="view_recipe_method_text_size">@dimen/standard_small_text_size</dimen>
+    <dimen name="view_recipe_method_timer_text_size">10sp</dimen>
 </resources>
