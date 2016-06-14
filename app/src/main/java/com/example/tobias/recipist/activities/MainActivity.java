@@ -55,7 +55,7 @@ public class MainActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.action_create_recipe:
-                Intent intent = new Intent(this, CreateRecipeActivity.class);
+                Intent intent = new Intent(this, AuthActivity.class);
                 startActivity(intent);
         }
 
