@@ -1,25 +1,35 @@
 package com.example.tobias.recipist.activities;
 
 import android.content.Intent;
-import android.graphics.Color;
-import android.graphics.PorterDuff;
-import android.graphics.drawable.Drawable;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
-import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.Toolbar;
-import android.text.Html;
+import android.util.Base64;
 import android.view.Menu;
 import android.view.MenuItem;
 
 import com.example.tobias.recipist.R;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
+import java.io.ByteArrayOutputStream;
+import java.util.List;
 
 import adapters.MainPageAdapter;
+import data.Ingredient;
+import data.Recipe;
+import data.Step;
 
 public class MainActivity extends AppCompatActivity {
+    private DatabaseReference mRootRef = FirebaseDatabase.getInstance().getReference();
+    private DatabaseReference mConditionRef = mRootRef.child("condition");
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,6 +49,63 @@ public class MainActivity extends AppCompatActivity {
                 tabLayout.setupWithViewPager(viewPager);
             }
         }
+        String recipeId = "3";
+        String title = "Gooey Apple Pie";
+//        String image = "";
+        boolean progress = true;
+        int time = 360;
+        String servings = "8-12";
+        List<Ingredient> ingredients = null;
+        List<Step> steps = null;
+
+
+
+        //http://stackoverflow.com/questions/26292969/can-i-store-image-files-in-firebase-using-java-api
+        Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.a);
+        ByteArrayOutputStream byteArrOpStrm = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.PNG, 100, byteArrOpStrm);
+        bitmap.recycle();
+        byte[] bytes = byteArrOpStrm.toByteArray();
+        String image = Base64.encodeToString(bytes, Base64.DEFAULT);
+//
+//        mConditionRef.setValue(image);
+//
+//        byte[] decodedString = Base64.decode(image, Base64.DEFAULT);
+//        Bitmap bitmapDecode = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
+
+//        writeNewRecipe(recipeId, title, image, progress, time, servings, ingredients, steps);
+        writeNewIngredient(recipeId, "1", "5", "pounds", "apples, peeled, cored, and sliced 1/2 inch thick");
+        writeNewIngredient(recipeId, "2", "100-150", "grams", "sugar, plus more for sprinkling");
+
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+
+        mConditionRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+    }
+
+    private void writeNewRecipe(String recipeId, String title, String image, boolean progress, int time, String servings, List<Ingredient> ingredients, List<Step> steps) {
+        Recipe recipe = new Recipe(title, image, progress, time, servings, ingredients, steps);
+
+        mRootRef.child("recipes").child(recipeId).setValue(recipe);
+    }
+
+    private void writeNewIngredient(String recipeId, String ingredientId, String quantity, String measure, String ingredient) {
+        Ingredient ing = new Ingredient(quantity, measure, ingredient);
+
+        mRootRef.child("recipes").child(recipeId).child("ingredients").child(ingredientId).setValue(ing);
     }
 
     @Override
