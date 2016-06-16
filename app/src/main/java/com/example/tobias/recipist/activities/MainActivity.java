@@ -59,7 +59,6 @@ public class MainActivity extends AppCompatActivity {
         List<Step> steps = null;
 
 
-
         //http://stackoverflow.com/questions/26292969/can-i-store-image-files-in-firebase-using-java-api
         Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.a);
         ByteArrayOutputStream byteArrOpStrm = new ByteArrayOutputStream();
@@ -76,6 +75,8 @@ public class MainActivity extends AppCompatActivity {
 //        writeNewRecipe(recipeId, title, image, progress, time, servings, ingredients, steps);
         writeNewIngredient(recipeId, "1", "5", "pounds", "apples, peeled, cored, and sliced 1/2 inch thick");
         writeNewIngredient(recipeId, "2", "100-150", "grams", "sugar, plus more for sprinkling");
+
+        writeNewStep(recipeId, "1", "Adjust oven rack to lower middle position and place a heavy rimmed baking sheet on it. Preheat oven to 425F (220C). Toss apple slices with sugar, cornstarch, cinnamon, and lemon juice and zest until well-coated. Let rest for 10 minutes.", null, 10);
 
     }
 
@@ -106,6 +107,12 @@ public class MainActivity extends AppCompatActivity {
         Ingredient ing = new Ingredient(quantity, measure, ingredient);
 
         mRootRef.child("recipes").child(recipeId).child("ingredients").child(ingredientId).setValue(ing);
+    }
+
+    private void writeNewStep(String recipeId, String stepId, String method, String image, int time) {
+        Step step = new Step(stepId, method, image, time);
+
+        mRootRef.child("recipes").child(recipeId).child("steps").child(stepId).setValue(step);
     }
 
     @Override
