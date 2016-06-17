@@ -1,11 +1,18 @@
 package com.example.tobias.recipist.activities;
 
+import android.app.ActionBar;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.CoordinatorLayout;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.ButtonBarLayout;
+import android.text.InputType;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.tobias.recipist.R;
@@ -24,11 +31,15 @@ public class CreateIngredientsActivity extends AppCompatActivity implements View
     private ArrayList<Ingredients.Ingredient> ingredients;
 
     EditText ingredient;
+    Button addIngredient;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_ingredients);
+
+        addIngredient = (Button) findViewById(R.id.add_ingredient);
+        if (addIngredient != null) addIngredient.setOnClickListener(this);
 
 //        TextView textView = (TextView) findViewById(R.id.lol);
         ingredient = (EditText) findViewById(R.id.ingredient);
@@ -38,11 +49,47 @@ public class CreateIngredientsActivity extends AppCompatActivity implements View
 
 //        ingredients.add(new Ingredients.Ingredient("150", "kilos", "cake"));
         decodeIngredientString("150g sugar");
+
+//        CoordinatorLayout coordinatorLayout = (CoordinatorLayout) findViewById(R.id.coord_layout);
+
+        LinearLayout linearLayout = (LinearLayout) findViewById(R.id.lin);
+
+        EditText editText = new EditText(this);
+        editText.setLayoutParams(new ViewGroup.LayoutParams(
+                ViewGroup.LayoutParams.MATCH_PARENT,
+                ViewGroup.LayoutParams.WRAP_CONTENT)
+        );
+
+        editText.setHint("150 kilos of pancakes");
+        editText.setMaxLines(1);
+        editText.setInputType(InputType.TYPE_CLASS_TEXT);
+
+        if (linearLayout != null) {
+            linearLayout.addView(editText);
+        }
     }
 
     @Override
     public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.add_ingredient:
+                LinearLayout linearLayout = (LinearLayout) findViewById(R.id.lin);
 
+                EditText editText = new EditText(this);
+                editText.setLayoutParams(new ViewGroup.LayoutParams(
+                        ViewGroup.LayoutParams.MATCH_PARENT,
+                        ViewGroup.LayoutParams.WRAP_CONTENT)
+                );
+
+                editText.setHint("150 kilos of pancakes");
+                editText.setMaxLines(1);
+                editText.setInputType(InputType.TYPE_CLASS_TEXT);
+
+                if (linearLayout != null) {
+                    linearLayout.addView(editText);
+                }
+                break;
+        }
     }
 
     @Override

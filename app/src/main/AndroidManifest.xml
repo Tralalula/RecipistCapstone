@@ -46,6 +46,7 @@
         <activity
             android:name=".activities.CreateIngredientsActivity"
             android:label="Create Ingredient"
+            android:windowSoftInputMode="adjustResize"
             android:parentActivityName=".activities.CreateRecipeActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"

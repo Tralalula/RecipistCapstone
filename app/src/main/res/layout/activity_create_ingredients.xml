@@ -1,23 +1,73 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/coord_layout"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true">
 
-    <TextView
-        android:id="@+id/lol"
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/app_bar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/colorPrimary"
+            android:elevation="4dp"
+            android:theme="@style/ThemeOverlay.AppCompat.Dark"
+            app:contentInsetStart="@dimen/view_recipe_app_bar_content_inset_start"
+            app:navigationIcon="@drawable/arrow_left_black" />
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <LinearLayout
+                    android:id="@+id/lin"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="26dp"
+                    android:orientation="vertical">
+
+                    <EditText
+                        android:id="@+id/ingredient"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="250 grams of sugar"
+                        android:inputType="text"
+                        android:maxLines="1"
+                        android:textColor="@color/textColorPrimary"
+                        android:textSize="@dimen/medium_small_text_size" />
+                </LinearLayout>
+
+                <Button
+                    android:id="@+id/add_ingredient"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/lin"
+                    android:layout_centerInParent="true"
+                    android:layout_marginEnd="26dp"
+                    android:layout_marginStart="26dp"
+                    android:text="Add ingredient"
+                    android:textColor="@color/textColorPrimary"
+                    android:textSize="@dimen/medium_small_text_size" />
+            </RelativeLayout>
+        </ScrollView>
+    </LinearLayout>
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/save_ingredients"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="lol" />
-
-    <EditText
-        android:id="@+id/ingredient"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:hint="250 grams of sugar"
-        android:inputType="text"
-        android:maxLines="1"
-        android:textColor="@color/textColorPrimary"
-        android:textSize="@dimen/medium_small_text_size" />
+        android:layout_gravity="bottom|end"
+        android:layout_margin="@dimen/standard_margin"
+        android:src="@drawable/done_white" />
 
 </android.support.design.widget.CoordinatorLayout>
