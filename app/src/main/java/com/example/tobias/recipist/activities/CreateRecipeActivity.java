@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
@@ -46,9 +47,9 @@ public class CreateRecipeActivity extends AppCompatActivity implements View.OnCl
 
         mCurrentTimeMillis = System.currentTimeMillis() + "";
 
-        mRecipeBitmapImage = null;
         mRecipeImage = (ImageView) findViewById(R.id.recipe_image);
         if (mRecipeImage != null) mRecipeImage.setOnClickListener(this);
+
     }
 
     @Override
@@ -61,7 +62,7 @@ public class CreateRecipeActivity extends AppCompatActivity implements View.OnCl
     protected void onRestoreInstanceState(Bundle savedInstanceState) {
         super.onRestoreInstanceState(savedInstanceState);
         mRecipeBitmapImage = savedInstanceState.getParcelable(BITMAP_STORAGE_KEY);
-        mRecipeImage.setImageBitmap(mRecipeBitmapImage);
+        if (mRecipeBitmapImage != null) mRecipeImage.setImageBitmap(mRecipeBitmapImage);
     }
 
     @Override
@@ -162,7 +163,10 @@ public class CreateRecipeActivity extends AppCompatActivity implements View.OnCl
                 ex.printStackTrace();
             }
         }
-        if (bitmap != null) mRecipeImage.setImageBitmap(bitmap);
+        if (bitmap != null) {
+            mRecipeImage.setImageBitmap(bitmap);
+            mRecipeBitmapImage = bitmap;
+        }
     }
 
     private void onCaptureImageResult() {
