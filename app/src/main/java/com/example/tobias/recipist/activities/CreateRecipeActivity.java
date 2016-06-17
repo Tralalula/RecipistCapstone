@@ -15,13 +15,16 @@ import android.support.annotation.NonNull;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 
 import com.example.tobias.recipist.R;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 
+import data.Ingredients;
 import util.Utilities;
 
 // For handling camera images I used the following guides:
@@ -38,7 +41,11 @@ public class CreateRecipeActivity extends AppCompatActivity implements View.OnCl
     private ImageView mRecipeImage;
     private Bitmap mRecipeBitmapImage;
 
+    private Button mRecipeEditIngredients;
+
     private String mCurrentTimeMillis;
+
+    private ArrayList<Ingredients.Ingredient> ingredients;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,8 +55,14 @@ public class CreateRecipeActivity extends AppCompatActivity implements View.OnCl
         mCurrentTimeMillis = System.currentTimeMillis() + "";
 
         mRecipeImage = (ImageView) findViewById(R.id.recipe_image);
-        if (mRecipeImage != null) mRecipeImage.setOnClickListener(this);
+        mRecipeEditIngredients = (Button) findViewById(R.id.recipe_edit_ingredients);
 
+        ingredients = new ArrayList<>();
+        Ingredients.Ingredient ingredient = new Ingredients.Ingredient("100", "grams", "sugar");
+        ingredients.add(ingredient);
+
+        if (mRecipeImage != null) mRecipeImage.setOnClickListener(this);
+        if (mRecipeEditIngredients != null) mRecipeEditIngredients.setOnClickListener(this);
     }
 
     @Override
@@ -71,8 +84,15 @@ public class CreateRecipeActivity extends AppCompatActivity implements View.OnCl
             case R.id.recipe_image:
                 selectImage();
                 break;
+            case R.id.recipe_edit_ingredients:
+                Intent intent = new Intent(this, CreateIngredientsActivity.class);
+                intent.putParcelableArrayListExtra("INGREDIENTS", ingredients);
+                startActivityForResult(intent, 666);
+                break;
         }
     }
+
+
 
     private void selectImage() {
         final CharSequence[] items = {"Take Photo", "Choose from Library", "Cancel"};
@@ -128,6 +148,13 @@ public class CreateRecipeActivity extends AppCompatActivity implements View.OnCl
             if (requestCode == SELECT_FILE) onSelectFromGalleryResult(data);
             else if (requestCode == REQUEST_CAMERA) {
                 onCaptureImageResult();
+            } else if (requestCode == 666) {
+                if (data != null) {
+                    ingredients = data.getParcelableArrayListExtra("INGREDIENTS");
+                    for (Ingredients.Ingredient ingredient : ingredients) {
+                        System.out.println("PANCAKE " + ingredient.getIngredient());
+                    }
+                }
             }
         }
     }

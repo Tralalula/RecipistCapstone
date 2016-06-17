@@ -14,13 +14,13 @@ public class Recipe {
     public boolean progress;
     public int time;
     public String servings;
-    public List<Ingredient> ingredients;
+    public List<Ingredients.Ingredient> ingredients;
     public List<Step> steps;
 
     public Recipe() {
     }
 
-    public Recipe(String title, String image, boolean progress, int time, String servings, List<Ingredient> ingredients, List<Step> steps) {
+    public Recipe(String title, String image, boolean progress, int time, String servings, List<Ingredients.Ingredient> ingredients, List<Step> steps) {
         this.title = title;
         this.image = image;
         this.progress = progress;

@@ -23,7 +23,7 @@ import java.io.ByteArrayOutputStream;
 import java.util.List;
 
 import adapters.MainPageAdapter;
-import data.Ingredient;
+import data.Ingredients.Ingredient;
 import data.Recipe;
 import data.Step;
 

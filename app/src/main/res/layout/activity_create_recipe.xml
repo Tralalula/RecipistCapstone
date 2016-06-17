@@ -24,10 +24,10 @@
                 android:id="@+id/recipe_image"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:scaleType="centerCrop"
                 android:layout_gravity="center"
-                android:transitionName="test"
+                android:scaleType="centerCrop"
                 android:src="@drawable/camera_alt_black"
+                android:transitionName="test"
                 app:layout_collapseMode="parallax" />
 
             <android.support.v7.widget.Toolbar
@@ -58,8 +58,100 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentStart="true"
                 android:hint="Gooey Apple Pie"
+                android:inputType="text"
+                android:maxLines="1"
                 android:textColor="@color/textColorPrimary"
                 android:textSize="@dimen/view_recipe_title_text_size" />
+
+            <Switch
+                android:id="@+id/recipe_progress"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:text="Completed"
+                android:textColor="@color/textColorSecondary"
+                android:textSize="@dimen/view_recipe_progress_text_size" />
+
+            <LinearLayout
+                android:id="@+id/recipe_time_and_servings"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/recipe_title"
+                android:layout_marginBottom="@dimen/view_recipe_time_and_servings_margin_bottom"
+                android:layout_marginTop="@dimen/view_recipe_time_and_servings_margin_top"
+                android:orientation="horizontal">
+
+                <EditText
+                    android:id="@+id/recipe_time"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:hint="time"
+                    android:inputType="text"
+                    android:maxLines="1"
+                    android:textColor="@color/textColorPrimary"
+                    android:textSize="@dimen/view_recipe_time_text_size" />
+
+                <EditText
+                    android:id="@+id/recipe_servings"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:digits="0123456789-"
+                    android:hint="servings"
+                    android:inputType="number"
+                    android:maxLines="1"
+                    android:textColor="@color/textColorPrimary"
+                    android:textSize="@dimen/view_recipe_servings_text_size" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/recipe_ingredients"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/recipe_time_and_servings"
+                android:orientation="vertical">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:id="@+id/recipe_ingredients_title"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Ingredients"
+                        android:layout_centerVertical="true"
+                        android:textColor="@color/textColorPrimary"
+                        android:textSize="@dimen/view_recipe_ingredients_title_text_size" />
+
+                    <Button
+                        android:id="@+id/recipe_edit_ingredients"
+                        android:layout_width="64dp"
+                        android:layout_height="32dp"
+                        android:layout_alignParentEnd="true"
+                        android:text="Edit"
+                        android:textColor="@color/textColorPrimary"
+                        android:textSize="10sp"/>
+
+                </RelativeLayout>
+
+
+                <LinearLayout
+                    android:id="@+id/recipe_ingredients_list"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/border"
+                    android:orientation="vertical"
+                    android:padding="4dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="No ingredients added"
+                        android:textColor="@color/textColorSecondary"
+                        android:textSize="@dimen/medium_text_size" />
+                </LinearLayout>
+            </LinearLayout>
 
         </RelativeLayout>
 

@@ -42,6 +42,15 @@
         <activity
             android:name=".activities.AuthActivity"
             android:label="Authenticate" />
+
+        <activity
+            android:name=".activities.CreateIngredientsActivity"
+            android:label="Create Ingredient"
+            android:parentActivityName=".activities.CreateRecipeActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".activities.CreateRecipeActivity" />
+        </activity>
     </application>
 
 </manifest>
