@@ -135,7 +135,6 @@
 
                 </RelativeLayout>
 
-
                 <LinearLayout
                     android:id="@+id/recipe_ingredients_list"
                     android:layout_width="match_parent"

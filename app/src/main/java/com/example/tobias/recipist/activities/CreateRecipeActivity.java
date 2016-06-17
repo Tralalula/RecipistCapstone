@@ -1,11 +1,13 @@
 package com.example.tobias.recipist.activities;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Typeface;
 import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Bundle;
@@ -17,11 +19,14 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.example.tobias.recipist.R;
 
 import java.io.File;
 import java.io.IOException;
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 
 import data.Ingredients;
@@ -47,6 +52,8 @@ public class CreateRecipeActivity extends AppCompatActivity implements View.OnCl
 
     private ArrayList<Ingredients.Ingredient> ingredients;
 
+    private LinearLayout mRecipeIngredientsList;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -56,6 +63,7 @@ public class CreateRecipeActivity extends AppCompatActivity implements View.OnCl
 
         mRecipeImage = (ImageView) findViewById(R.id.recipe_image);
         mRecipeEditIngredients = (Button) findViewById(R.id.recipe_edit_ingredients);
+        mRecipeIngredientsList = (LinearLayout) findViewById(R.id.recipe_ingredients_list);
 
         ingredients = new ArrayList<>();
         Ingredients.Ingredient ingredient = new Ingredients.Ingredient("100", "grams", "sugar");
@@ -63,6 +71,12 @@ public class CreateRecipeActivity extends AppCompatActivity implements View.OnCl
 
         if (mRecipeImage != null) mRecipeImage.setOnClickListener(this);
         if (mRecipeEditIngredients != null) mRecipeEditIngredients.setOnClickListener(this);
+
+        for (Ingredients.Ingredient d : ingredients) {
+            System.out.println("CREME BRULEE " + d.getIngredient());
+        }
+
+        updateIngredients();
     }
 
     @Override
@@ -91,8 +105,6 @@ public class CreateRecipeActivity extends AppCompatActivity implements View.OnCl
                 break;
         }
     }
-
-
 
     private void selectImage() {
         final CharSequence[] items = {"Take Photo", "Choose from Library", "Cancel"};
@@ -151,10 +163,28 @@ public class CreateRecipeActivity extends AppCompatActivity implements View.OnCl
             } else if (requestCode == 666) {
                 if (data != null) {
                     ingredients = data.getParcelableArrayListExtra("INGREDIENTS");
-                    for (Ingredients.Ingredient ingredient : ingredients) {
-                        System.out.println("PANCAKE " + ingredient.getIngredient());
-                    }
+                    updateIngredients();
+//                    for (Ingredients.Ingredient ingredient : ingredients) {
+//                        System.out.println("PANCAKE " + ingredient.getIngredient());
+//                    }
                 }
+            }
+        }
+    }
+
+    private void updateIngredients() {
+        mRecipeIngredientsList.removeAllViews();
+
+        if (ingredients == null || ingredients.isEmpty()) {
+            addToLinearLayout(this, mRecipeIngredientsList, "NOT AVAILABLE :'(", Typeface.NORMAL);
+        } else {
+            for (final Ingredients.Ingredient ingredient : ingredients) {
+                addToLinearLayout(
+                        this,
+                        mRecipeIngredientsList,
+                        ingredient.getMeasure() + ingredient.getQuantity() + ingredient.getIngredient(),
+                        Typeface.NORMAL
+                );
             }
         }
     }
@@ -210,5 +240,13 @@ public class CreateRecipeActivity extends AppCompatActivity implements View.OnCl
         Uri contentUri = Uri.fromFile(file);
         mediaScanIntent.setData(contentUri);
         this.sendBroadcast(mediaScanIntent);
+    }
+
+
+    private void addToLinearLayout(Context context, LinearLayout linearLayout, String text, int typeface) {
+        TextView textView = new TextView(context);
+        textView.setText(text);
+        textView.setTypeface(null, typeface);
+        linearLayout.addView(textView);
     }
 }
