@@ -8,7 +8,10 @@ import android.os.Bundle;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.ButtonBarLayout;
+import android.support.v7.widget.Toolbar;
 import android.text.InputType;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
@@ -44,6 +47,9 @@ public class CreateIngredientsActivity extends AppCompatActivity implements View
 
     private ArrayList<Ingredients.Ingredient> ingredients;
 
+    private Menu mMenu;
+
+
     EditText ingredient;
     ImageView sortIngredients;
     Button addIngredient;
@@ -51,10 +57,15 @@ public class CreateIngredientsActivity extends AppCompatActivity implements View
 
     private boolean mSortIngredientsMode;
 
+    private Toolbar mToolbar;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_ingredients);
+
+        mToolbar = (Toolbar) findViewById(R.id.app_bar);
+        setSupportActionBar(mToolbar);
 
         mSortIngredientsMode = false;
         sortIngredients = (ImageView) findViewById(R.id.sort_ingredients);
@@ -142,6 +153,24 @@ public class CreateIngredientsActivity extends AppCompatActivity implements View
 //                return false;
 //            }
 //        });
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.create_ingredients_toolbar, menu);
+        mMenu = menu;
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.action_sort_ingredients:
+                mMenu.getItem(0).setIcon(getResources().getDrawable(R.drawable.done_black));
+                return true;
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 
     @Override

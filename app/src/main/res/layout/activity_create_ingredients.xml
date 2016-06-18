@@ -15,23 +15,24 @@
             android:id="@+id/app_bar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/colorPrimary"
+            android:background="?attr/colorPrimary"
             android:elevation="4dp"
-            android:theme="@style/ThemeOverlay.AppCompat.Dark"
-            app:contentInsetStart="@dimen/view_recipe_app_bar_content_inset_start"
-            app:navigationIcon="@drawable/close">
+            app:navigationIcon="@drawable/close"
+            app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+            app:titleTextColor="@color/textColorPrimary">
 
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:clickable="true"
                 android:layout_marginEnd="26dp"
+                android:clickable="true"
                 android:gravity="end">
 
                 <ImageView
                     android:id="@+id/sort_ingredients"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:background="@color/textColorSecondary"
                     android:src="@drawable/sort" />
             </RelativeLayout>
         </android.support.v7.widget.Toolbar>
