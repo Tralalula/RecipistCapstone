@@ -19,7 +19,7 @@
             android:elevation="4dp"
             android:theme="@style/ThemeOverlay.AppCompat.Dark"
             app:contentInsetStart="@dimen/view_recipe_app_bar_content_inset_start"
-            app:navigationIcon="@drawable/arrow_left_black" />
+            app:navigationIcon="@drawable/close" />
 
         <ScrollView
             android:layout_width="match_parent"
@@ -29,7 +29,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
-                <LinearLayout
+                <com.jmedeisis.draglinearlayout.DragLinearLayout
                     android:id="@+id/lin"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -45,7 +45,7 @@
                         android:maxLines="1"
                         android:textColor="@color/textColorPrimary"
                         android:textSize="@dimen/medium_small_text_size" />
-                </LinearLayout>
+                </com.jmedeisis.draglinearlayout.DragLinearLayout>
 
                 <Button
                     android:id="@+id/add_ingredient"

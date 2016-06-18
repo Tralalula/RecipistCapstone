@@ -15,9 +15,11 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.example.tobias.recipist.R;
+import com.jmedeisis.draglinearlayout.DragLinearLayout;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -28,7 +30,15 @@ import data.Ingredients;
  * Created by Tobias on 17-06-2016.
  */
 public class CreateIngredientsActivity extends AppCompatActivity implements View.OnClickListener {
-    private String[] measurements = {"g", "gr", "gram", "grams"};
+    private String[] measurements = {
+            "g", "gr", "gram", "grams",
+            "cups", "cup",
+            "tsp", "tsps", "teaspoon", "teaspoons",
+            "tbsp", "tbsps", "tablespoon", "tablespoons",
+            "kg", "kgs", "kilo", "kilos", "kilogram", "kilograms",
+            "oz", "ozs", "ounce", "ounces",
+            "pound", "pounds"
+    };
 
     private ArrayList<Ingredients.Ingredient> ingredients;
 
@@ -54,7 +64,7 @@ public class CreateIngredientsActivity extends AppCompatActivity implements View
 
 //        CoordinatorLayout coordinatorLayout = (CoordinatorLayout) findViewById(R.id.coord_layout);
 
-        final LinearLayout linearLayout = (LinearLayout) findViewById(R.id.lin);
+        final DragLinearLayout linearLayout = (DragLinearLayout) findViewById(R.id.lin);
 
         final EditText editText = new EditText(this);
         editText.setLayoutParams(new ViewGroup.LayoutParams(
@@ -73,6 +83,7 @@ public class CreateIngredientsActivity extends AppCompatActivity implements View
             linearLayout.addView(editText);
         }
 
+        // http://stackoverflow.com/questions/13135447/setting-onclicklistner-for-the-drawable-right-of-an-edittext/26269435#26269435
         editText.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
@@ -93,6 +104,11 @@ public class CreateIngredientsActivity extends AppCompatActivity implements View
                 return false;
             }
         });
+
+        for (int i = 0; i < (linearLayout != null ? linearLayout.getChildCount() : 0); i++) {
+            View child = linearLayout.getChildAt(i);
+            linearLayout.setViewDraggable(child, child);
+        }
     }
 
     @Override
