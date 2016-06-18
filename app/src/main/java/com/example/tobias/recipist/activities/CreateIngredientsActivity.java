@@ -3,11 +3,13 @@ package com.example.tobias.recipist.activities;
 import android.app.ActionBar;
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.ButtonBarLayout;
 import android.text.InputType;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -52,9 +54,9 @@ public class CreateIngredientsActivity extends AppCompatActivity implements View
 
 //        CoordinatorLayout coordinatorLayout = (CoordinatorLayout) findViewById(R.id.coord_layout);
 
-        LinearLayout linearLayout = (LinearLayout) findViewById(R.id.lin);
+        final LinearLayout linearLayout = (LinearLayout) findViewById(R.id.lin);
 
-        EditText editText = new EditText(this);
+        final EditText editText = new EditText(this);
         editText.setLayoutParams(new ViewGroup.LayoutParams(
                 ViewGroup.LayoutParams.MATCH_PARENT,
                 ViewGroup.LayoutParams.WRAP_CONTENT)
@@ -63,10 +65,34 @@ public class CreateIngredientsActivity extends AppCompatActivity implements View
         editText.setHint("150 kilos of pancakes");
         editText.setMaxLines(1);
         editText.setInputType(InputType.TYPE_CLASS_TEXT);
+        Drawable draw = getDrawable(R.drawable.ic_delete_black_24dp);
+        editText.setCompoundDrawablesWithIntrinsicBounds(null, null, draw, null);
+//        editText.setCompoundDrawables(null, null, drawable, null);
 
         if (linearLayout != null) {
             linearLayout.addView(editText);
         }
+
+        editText.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                final int DRAWABLE_LEFT = 0;
+                final int DRAWABLE_TOP = 1;
+                final int DRAWABLE_RIGHT = 2;
+                final int DRAWABLE_BOTTOM = 3;
+
+                if (event.getAction() == MotionEvent.ACTION_UP) {
+                    if (event.getRawX() >= (editText.getRight() - editText.getCompoundDrawables()[DRAWABLE_RIGHT].getBounds().width())) {
+                        if (linearLayout != null) {
+                            linearLayout.removeView(editText);
+                        }
+                        System.out.println("YOU CLICKED IT, MUAHAHAH");
+                        return true;
+                    }
+                }
+                return false;
+            }
+        });
     }
 
     @Override
