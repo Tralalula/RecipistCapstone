@@ -13,6 +13,7 @@ import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewParent;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -20,6 +21,7 @@ import android.widget.ImageView;
 import com.example.tobias.recipist.R;
 import com.jmedeisis.draglinearlayout.DragLinearLayout;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -67,7 +69,12 @@ public class CreateIngredientsActivity extends AppCompatActivity implements View
         addIngredient = (Button) findViewById(R.id.add_ingredient);
         if (addIngredient != null) addIngredient.setOnClickListener(this);
 
-        dragLinearLayout = (DragLinearLayout) findViewById(R.id.lin);
+        if (dragLinearLayout == null) {
+            dragLinearLayout = (DragLinearLayout) findViewById(R.id.lin);
+        } else {
+            ViewParent parent = dragLinearLayout.getParent();
+            if (parent != null) ((ViewGroup) parent).removeView(dragLinearLayout);
+        }
 
         floatingActionButton = (FloatingActionButton) findViewById(R.id.save_ingredients);
         if (floatingActionButton != null) floatingActionButton.setOnClickListener(this);
@@ -86,6 +93,36 @@ public class CreateIngredientsActivity extends AppCompatActivity implements View
         }
 
         handleIngredientsMode();
+    }
+
+    @Override
+    protected void onRestoreInstanceState(Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+        ArrayList<EditText> arraylist = (ArrayList<EditText>) savedInstanceState.getSerializable("ARRAYLIST");
+        dragLinearLayout.removeAllViews();
+        if (arraylist != null) {
+            for (EditText editText : arraylist) {
+                ((ViewGroup) editText.getParent()).removeView(editText);
+                dragLinearLayout.addView(editText);
+            }
+        }
+
+        mSortIngredientsMode = savedInstanceState.getBoolean("SORTMODE");
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        ArrayList<EditText> editTexts = new ArrayList<>();
+        int count = dragLinearLayout.getChildCount();
+        for (int i = 0; i < count; i++) {
+            View child = dragLinearLayout.getChildAt(i);
+            EditText editTextChild = (EditText) child;
+            editTexts.add(editTextChild);
+        }
+        outState.putSerializable("ARRAYLIST", editTexts);
+        outState.putBoolean("SORTMODE", !mSortIngredientsMode);
+
+        super.onSaveInstanceState(outState);
     }
 
     private void addEditTextViewToDragLinearLayout(String text) {
