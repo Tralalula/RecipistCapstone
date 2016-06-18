@@ -74,9 +74,9 @@ public class MainActivity extends AppCompatActivity {
 
 //        writeNewRecipe(recipeId, title, image, progress, time, servings, ingredients, steps);
         writeNewIngredient(recipeId, "1", "5", "pounds", "apples, peeled, cored, and sliced 1/2 inch thick");
-        writeNewIngredient(recipeId, "2", "100-150", "grams", "sugar, plus more for sprinkling");
+        writeNewIngredient(recipeId, "3", "100-150", "grams", "sugar, plus more for sprinkling");
 
-        writeNewStep(recipeId, "1", "Adjust oven rack to lower middle position and place a heavy rimmed baking sheet on it. Preheat oven to 425F (220C). Toss apple slices with sugar, cornstarch, cinnamon, and lemon juice and zest until well-coated. Let rest for 10 minutes.", null, 10);
+        writeNewStep(recipeId, "2", "Adjust oven rack to lower middle position and place a heavy rimmed baking sheet on it. Preheat oven to 425F (220C). Toss apple slices with sugar, cornstarch, cinnamon, and lemon juice and zest until well-coated. Let rest for 10 minutes.", null, 10);
 
     }
 
