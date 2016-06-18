@@ -1,13 +1,11 @@
 package com.example.tobias.recipist.activities;
 
-import android.app.ActionBar;
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-import android.support.design.widget.CoordinatorLayout;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.ButtonBarLayout;
 import android.support.v7.widget.Toolbar;
 import android.text.InputType;
 import android.view.Menu;
@@ -18,18 +16,15 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
-import android.widget.TextView;
 
 import com.example.tobias.recipist.R;
 import com.jmedeisis.draglinearlayout.DragLinearLayout;
-import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 
 import data.Ingredients;
+import util.Utilities;
 
 /**
  * Created by Tobias on 17-06-2016.
@@ -45,15 +40,15 @@ public class CreateIngredientsActivity extends AppCompatActivity implements View
             "pound", "pounds"
     };
 
-    private ArrayList<Ingredients.Ingredient> ingredients;
+    private ArrayList<Ingredients.Ingredient> oldIngredients;
+    private ArrayList<Ingredients.Ingredient> newIngredients;
 
     private Menu mMenu;
 
-
-    EditText ingredient;
     ImageView sortIngredients;
     Button addIngredient;
-    DragLinearLayout linearLayout;
+    DragLinearLayout dragLinearLayout;
+    FloatingActionButton floatingActionButton;
 
     private boolean mSortIngredientsMode;
 
@@ -67,98 +62,55 @@ public class CreateIngredientsActivity extends AppCompatActivity implements View
         mToolbar = (Toolbar) findViewById(R.id.app_bar);
         setSupportActionBar(mToolbar);
 
-        mSortIngredientsMode = false;
-        sortIngredients = (ImageView) findViewById(R.id.sort_ingredients);
-        if (sortIngredients != null) sortIngredients.setOnClickListener(this);
+        mSortIngredientsMode = true;
 
         addIngredient = (Button) findViewById(R.id.add_ingredient);
         if (addIngredient != null) addIngredient.setOnClickListener(this);
 
-//        TextView textView = (TextView) findViewById(R.id.lol);
-        ingredient = (EditText) findViewById(R.id.ingredient);
-        if (getIntent() != null)
-            ingredients = getIntent().getParcelableArrayListExtra("INGREDIENTS");
-//        if (textView != null) textView.setText(ingredients.get(0).getIngredient());
+        dragLinearLayout = (DragLinearLayout) findViewById(R.id.lin);
 
-//        ingredients.add(new Ingredients.Ingredient("150", "kilos", "cake"));
-        decodeIngredientString("150g sugar");
+        floatingActionButton = (FloatingActionButton) findViewById(R.id.save_ingredients);
+        if (floatingActionButton != null) floatingActionButton.setOnClickListener(this);
 
-//        CoordinatorLayout coordinatorLayout = (CoordinatorLayout) findViewById(R.id.coord_layout);
+        if (getIntent() != null) {
+            oldIngredients = getIntent().getParcelableArrayListExtra("INGREDIENTS");
+            newIngredients = oldIngredients;
+            if (!oldIngredients.isEmpty()) {
+                for (Ingredients.Ingredient ingredient : newIngredients) {
+//                System.out.println("MEOW CAKE IS GOOD " + ingredient.getIngredient());
+                    addEditTextViewToDragLinearLayout(ingredient.getQuantity() + ingredient.getMeasure() + ingredient.getIngredient());
+                }
+            } else {
+                addEmptyEditTextView();
+            }
+        }
 
-        linearLayout = (DragLinearLayout) findViewById(R.id.lin);
+        handleIngredientsMode();
+    }
 
-        final EditText editText = new EditText(this);
+    private void addEditTextViewToDragLinearLayout(String text) {
+        EditText editText = new EditText(this);
         editText.setLayoutParams(new ViewGroup.LayoutParams(
                 ViewGroup.LayoutParams.MATCH_PARENT,
                 ViewGroup.LayoutParams.WRAP_CONTENT)
         );
 
-        editText.setHint("150 kilos of pancakes");
+        editText.setText(text);
         editText.setMaxLines(1);
         editText.setInputType(InputType.TYPE_CLASS_TEXT);
-//        Drawable draw = getDrawable(R.drawable.ic_delete_black_24dp);
-//        editText.setCompoundDrawablesWithIntrinsicBounds(null, null, draw, null);
-//        editText.setCompoundDrawables(null, null, drawable, null);
 
-        if (linearLayout != null) {
-            linearLayout.addView(editText);
+        if (dragLinearLayout != null) {
+            dragLinearLayout.addView(editText);
         }
 
-        for (int i = 0; i < (linearLayout != null ? linearLayout.getChildCount() : 0); i++) {
-            View child = linearLayout.getChildAt(i);
-//            linearLayout.setViewDraggable(child, child);
-
-            final EditText c = (EditText) child;
-
-            Drawable draw = getDrawable(R.drawable.ic_delete_black_24dp);
-            c.setCompoundDrawablesWithIntrinsicBounds(null, null, draw, null);
-            c.setOnTouchListener(new View.OnTouchListener() {
-                @Override
-                public boolean onTouch(View v, MotionEvent event) {
-                    final int DRAWABLE_LEFT = 0;
-                    final int DRAWABLE_TOP = 1;
-                    final int DRAWABLE_RIGHT = 2;
-                    final int DRAWABLE_BOTTOM = 3;
-
-                    if (event.getAction() == MotionEvent.ACTION_UP) {
-                        if (event.getRawX() >= (c.getRight() - c.getCompoundDrawables()[DRAWABLE_RIGHT].getBounds().width())) {
-                            linearLayout.removeView(c);
-                            System.out.println("YOU CLICKED IT, MUAHAHAH");
-                            return true;
-                        }
-                    }
-                    return false;
-                }
-            });
-        }
-
-        // http://stackoverflow.com/questions/13135447/setting-onclicklistner-for-the-drawable-right-of-an-edittext/26269435#26269435
-//        editText.setOnTouchListener(new View.OnTouchListener() {
-//            @Override
-//            public boolean onTouch(View v, MotionEvent event) {
-//                final int DRAWABLE_LEFT = 0;
-//                final int DRAWABLE_TOP = 1;
-//                final int DRAWABLE_RIGHT = 2;
-//                final int DRAWABLE_BOTTOM = 3;
-//
-//                if (event.getAction() == MotionEvent.ACTION_UP) {
-//                    if (event.getRawX() >= (editText.getRight() - editText.getCompoundDrawables()[DRAWABLE_RIGHT].getBounds().width())) {
-//                        if (linearLayout != null) {
-//                            linearLayout.removeView(editText);
-//                        }
-//                        System.out.println("YOU CLICKED IT, MUAHAHAH");
-//                        return true;
-//                    }
-//                }
-//                return false;
-//            }
-//        });
+        updateEditTextsToCurrentMode();
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.create_ingredients_toolbar, menu);
         mMenu = menu;
+        swapMode();
         return super.onCreateOptionsMenu(menu);
     }
 
@@ -166,131 +118,216 @@ public class CreateIngredientsActivity extends AppCompatActivity implements View
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.action_sort_ingredients:
-                mMenu.getItem(0).setIcon(getResources().getDrawable(R.drawable.done_black));
+                handleIngredientsMode();
+                swapMode();
+                return true;
+            case Utilities.TOOLBAR_NAVIGATION_ICON_CLICK_ID:
+                onBackPressed();
                 return true;
         }
 
         return super.onOptionsItemSelected(item);
     }
 
+    private void swapMode() {
+        if (!mSortIngredientsMode) {
+            handleSortMode(getDrawable(R.drawable.done_black), true);
+        } else {
+            handleSortMode(getDrawable(R.drawable.sort), false);
+        }
+    }
+
+    private void handleIngredientsMode() {
+        for (int i = 0; i < (dragLinearLayout != null ? dragLinearLayout.getChildCount() : 0); i++) {
+            View child = dragLinearLayout.getChildAt(i);
+            EditText editTextChild = (EditText) child;
+
+            if (!mSortIngredientsMode) {
+                addImageToTheRightOfEditText(editTextChild, getDrawable(R.drawable.ic_swap_vert_black_24dp));
+                dragLinearLayout.setViewDraggable(child, child);
+            } else {
+                addImageToTheRightOfEditText(editTextChild, getDrawable(R.drawable.ic_delete_black_24dp));
+                makeEditTextDeletableFromDragLinearLayout(editTextChild, dragLinearLayout, 2);
+            }
+        }
+    }
+
+    private void updateEditTextsToCurrentMode() {
+        for (int i = 0; i < (dragLinearLayout != null ? dragLinearLayout.getChildCount() : 0); i++) {
+            View child = dragLinearLayout.getChildAt(i);
+            EditText editTextChild = (EditText) child;
+
+            if (mSortIngredientsMode) {
+                addImageToTheRightOfEditText(editTextChild, getDrawable(R.drawable.ic_swap_vert_black_24dp));
+                dragLinearLayout.setViewDraggable(child, child);
+            } else {
+                addImageToTheRightOfEditText(editTextChild, getDrawable(R.drawable.ic_delete_black_24dp));
+                makeEditTextDeletableFromDragLinearLayout(editTextChild, dragLinearLayout, 2);
+            }
+        }
+    }
+
+    private void handleSortMode(Drawable drawable, boolean sortMode) {
+        mMenu.getItem(0).setIcon(drawable);
+        mSortIngredientsMode = sortMode;
+    }
+
+    private void addImageToTheRightOfEditText(EditText editText, Drawable image) {
+        editText.setCompoundDrawablesWithIntrinsicBounds(null, null, image, null);
+    }
+
+    // http://stackoverflow.com/questions/13135447/setting-onclicklistner-for-the-drawable-right-of-an-edittext/26269435#26269435
+    private void makeEditTextDeletableFromDragLinearLayout(final EditText editText, final DragLinearLayout dragLinearLayout, final int IMAGE_POSITION) {
+        editText.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View view, MotionEvent event) {
+                if (event.getAction() == MotionEvent.ACTION_UP) {
+                    if (event.getRawX() >= (editText.getRight() - editText.getCompoundDrawables()[IMAGE_POSITION].getBounds().width())) {
+                        dragLinearLayout.removeView(editText);
+                        return true;
+                    }
+                }
+                return false;
+            }
+        });
+    }
+
     @Override
     public void onClick(View v) {
+//        System.out.println("v.getId() = " + v.getId());
         switch (v.getId()) {
             case R.id.add_ingredient:
-                EditText editText = new EditText(this);
-                editText.setLayoutParams(new ViewGroup.LayoutParams(
-                        ViewGroup.LayoutParams.MATCH_PARENT,
-                        ViewGroup.LayoutParams.WRAP_CONTENT)
-                );
-
-                editText.setHint("150 kilos of pancakes");
-                editText.setMaxLines(1);
-                editText.setInputType(InputType.TYPE_CLASS_TEXT);
-
-                if (linearLayout != null) {
-                    linearLayout.addView(editText);
-                }
+                addEmptyEditTextView();
                 break;
-            case R.id.sort_ingredients:
-                if (!mSortIngredientsMode) {
-                    for (int i = 0; i < (linearLayout != null ? linearLayout.getChildCount() : 0); i++) {
-                        View child = linearLayout.getChildAt(i);
-                        Drawable draw = getDrawable(R.drawable.ic_swap_vert_black_24dp);
-                        EditText editTextChild = (EditText) child;
-                        editTextChild.setCompoundDrawablesWithIntrinsicBounds(null, null, draw, null);
-                        linearLayout.setViewDraggable(child, child);
-                    }
-                    Picasso.with(this).load(R.drawable.ic_done_black_24dp).into(sortIngredients);
-                    mSortIngredientsMode = true;
-                } else {
-                    for (int i = 0; i < (linearLayout != null ? linearLayout.getChildCount() : 0); i++) {
-                        View child = linearLayout.getChildAt(i);
-                        final EditText c = (EditText) child;
+            case R.id.save_ingredients:
+                Intent intent = new Intent();
 
-                        Drawable draw = getDrawable(R.drawable.ic_delete_black_24dp);
-                        c.setCompoundDrawablesWithIntrinsicBounds(null, null, draw, null);
-                        c.setOnTouchListener(new View.OnTouchListener() {
-                            @Override
-                            public boolean onTouch(View v, MotionEvent event) {
-                                final int DRAWABLE_LEFT = 0;
-                                final int DRAWABLE_TOP = 1;
-                                final int DRAWABLE_RIGHT = 2;
-                                final int DRAWABLE_BOTTOM = 3;
+                newIngredients = new ArrayList<>();
 
-                                if (event.getAction() == MotionEvent.ACTION_UP) {
-                                    if (event.getRawX() >= (c.getRight() - c.getCompoundDrawables()[DRAWABLE_RIGHT].getBounds().width())) {
-                                        linearLayout.removeView(c);
-                                        System.out.println("YOU CLICKED IT, MUAHAHAH");
-                                        return true;
-                                    }
-                                }
-                                return false;
-                            }
-                        });
+                for (int i = 0; i < (dragLinearLayout != null ? dragLinearLayout.getChildCount() : 0); i++) {
+                    View child = dragLinearLayout.getChildAt(i);
+                    EditText editTextChild = (EditText) child;
+
+                    if (!isEditTextEmpty(editTextChild)) {
+//                        newIngredients.add(decodeIngredientString(editTextChild.getText().toString()));
+//                        decodeString(editTextChild.getText().toString());
+                        newIngredients.add(new Ingredients.Ingredient("", "", editTextChild.getText().toString()));
                     }
-                    Picasso.with(this).load(R.drawable.ic_sort_black_24dp).into(sortIngredients);
-                    mSortIngredientsMode = false;
                 }
+
+                intent.putParcelableArrayListExtra("INGREDIENTS", newIngredients);
+                setResult(Activity.RESULT_OK, intent);
+                finish();
                 break;
         }
+    }
+
+    private void addEmptyEditTextView() {
+        EditText editText = new EditText(this);
+        editText.setLayoutParams(new ViewGroup.LayoutParams(
+                ViewGroup.LayoutParams.MATCH_PARENT,
+                ViewGroup.LayoutParams.WRAP_CONTENT)
+        );
+
+        editText.setHint("150 grams of sugar");
+        editText.setMaxLines(1);
+        editText.setInputType(InputType.TYPE_CLASS_TEXT);
+
+        if (dragLinearLayout != null) dragLinearLayout.addView(editText);
+        updateEditTextsToCurrentMode();
     }
 
     @Override
     public void onBackPressed() {
         Intent intent = new Intent();
-
-        if (!isEditTextEmpty(ingredient)) {
-            ingredients.add(new Ingredients.Ingredient(
-                    "150",
-                    "kilos",
-                    ingredient.getText().toString())
-            );
-        }
-
-        intent.putParcelableArrayListExtra("INGREDIENTS", ingredients);
+        intent.putParcelableArrayListExtra("INGREDIENTS", oldIngredients);
         setResult(Activity.RESULT_OK, intent);
         super.onBackPressed();
     }
 
-    private void decodeIngredientString(String ingredientString) {
-        String quantity = "";
-        String measurement = "";
-        String ingredient = "";
+//    private Ingredients.Ingredient decodeIngredientString(String ingredientString) {
+//        String quantity = "";
+//        String measurement = "";
+//        String ingredient = "";
+//
+//        boolean foundQuantity = false;
+//        for (int i = 0; i < ingredientString.length(); i++) {
+//            System.out.println("FOR " + ingredientString.charAt(i));
+//            char currentChar = ingredientString.charAt(i);
+//            if (Character.isDigit(currentChar) && !foundQuantity) quantity += currentChar;
+//            else foundQuantity = true;
+//
+//            if (foundQuantity) {
+//                if (ingredientString.contains(" ")) {
+//                    String checkForMeasurement = ingredientString.substring(
+//                            i,
+//                            ingredientString.indexOf(" ")
+//                    );
+//                    System.out.println("LOL " + checkForMeasurement);
+//                    System.out.println("MEOW " + ingredientString.substring(i));
+//
+//                    if (Arrays.asList(measurements).contains(checkForMeasurement)) {
+//                        measurement = checkForMeasurement;
+//                        ingredient = ingredientString.substring(ingredientString.indexOf(" ") + 1);
+//                    } else {
+//                        ingredient = ingredientString.substring(i);
+//                    }
+//                } else {
+//                    ingredient = ingredientString.substring(i);
+//                }
+//                break;
+//            }
+//        }
+//
+//        System.out.println(quantity.contains(" "));
+//        System.out.println(measurement.contains(" "));
+//        System.out.println(ingredient.contains(" "));
+//        System.out.println("PEW PEW :" + quantity + ": :" + measurement + ": :" + ingredient);
+//        return new Ingredients.Ingredient(quantity, measurement, ingredient);
+//    }
 
-        boolean foundQuantity = false;
-        for (int i = 0; i < ingredientString.length(); i++) {
-            System.out.println("FOR " + ingredientString.charAt(i));
-            char currentChar = ingredientString.charAt(i);
-            if (Character.isDigit(currentChar) && !foundQuantity) quantity += currentChar;
-            else foundQuantity = true;
-
-            if (foundQuantity) {
-                if (ingredientString.contains(" ")) {
-                    String checkForMeasurement = ingredientString.substring(
-                            i,
-                            ingredientString.indexOf(" ")
-                    );
-                    System.out.println("LOL " + checkForMeasurement);
-                    System.out.println("MEOW " + ingredientString.substring(i));
-
-                    if (Arrays.asList(measurements).contains(checkForMeasurement)) {
-                        measurement = checkForMeasurement;
-                        ingredient = ingredientString.substring(ingredientString.indexOf(" ") + 1);
-                    } else {
-                        ingredient = ingredientString.substring(i);
-                    }
-                } else {
-                    ingredient = ingredientString.substring(i);
-                }
-                break;
-            }
-        }
-
-        System.out.println(quantity.contains(" "));
-        System.out.println(measurement.contains(" "));
-        System.out.println(ingredient.contains(" "));
-        System.out.println("PEW PEW " + quantity + " " + measurement + " " + ingredient);
-    }
+//    private void decodeString(String ingredientString) {
+//        String quantity = "";
+//        String measurement = "";
+//        String ingredient = "";
+//
+//        boolean foundQuantity = false;
+//        for (int i = 0; i < ingredientString.length(); i++) {
+//            char currentChar = ingredientString.charAt(i);
+//            if (Character.isDigit(currentChar) && !foundQuantity) quantity += currentChar;
+//            else foundQuantity = true;
+//
+//            if (foundQuantity) {
+//                String tempMeasurement = ingredientString.substring(i);
+//                boolean forLoopComplete = false;
+//                for (int j = 0; j < tempMeasurement.length(); j++) {
+//                    char tempMeasurementChar = tempMeasurement.charAt(j);
+//                    if (tempMeasurementChar != ' ') {
+//                        String tempMeasurementWithoutSpacesAtStart = tempMeasurement.substring(j);
+//                        if (tempMeasurementWithoutSpacesAtStart.contains(" ")) {
+//                            String checkForMeasurement = tempMeasurementWithoutSpacesAtStart.substring(j, tempMeasurementWithoutSpacesAtStart.indexOf(' '));
+//                            if (Arrays.asList(measurements).contains(checkForMeasurement)) {
+//                                measurement = checkForMeasurement;
+//                                ingredient = tempMeasurementWithoutSpacesAtStart.substring(tempMeasurementWithoutSpacesAtStart.indexOf(' ') + 1);
+//                            } else {
+//                                ingredient = tempMeasurementWithoutSpacesAtStart;
+//                            }
+//                        } else {
+//                            ingredient = tempMeasurementWithoutSpacesAtStart;
+//                        }
+//                    }
+//
+//                    if (j == tempMeasurement.length() - 1) forLoopComplete = true;
+//                }
+//
+//                if (forLoopComplete) ingredient = tempMeasurement;
+//
+//                break;
+//            }
+//        }
+//
+//        System.out.println("TEST TEST |" + quantity + "| |" + measurement + "| |" + ingredient);
+//    }
 
     private boolean isEditTextEmpty(EditText editText) {
         return editText.getText().toString().trim().length() == 0;

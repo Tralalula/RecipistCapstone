@@ -16,6 +16,8 @@ import android.support.v7.app.AlertDialog;
  */
 public class Utilities {
 
+    public static final int TOOLBAR_NAVIGATION_ICON_CLICK_ID = 16908332;
+
     public static final int MY_PERMISSIONS_REQUEST_READ_EXTERNAL_STORAGE = 123;
 
     // http://www.theappguruz.com/blog/android-take-photo-camera-gallery-code-sample

@@ -66,8 +66,8 @@ public class CreateRecipeActivity extends AppCompatActivity implements View.OnCl
         mRecipeIngredientsList = (LinearLayout) findViewById(R.id.recipe_ingredients_list);
 
         ingredients = new ArrayList<>();
-        Ingredients.Ingredient ingredient = new Ingredients.Ingredient("100", "grams", "sugar");
-        ingredients.add(ingredient);
+//        Ingredients.Ingredient ingredient = new Ingredients.Ingredient("100", "grams", "sugar");
+//        ingredients.add(ingredient);
 
         if (mRecipeImage != null) mRecipeImage.setOnClickListener(this);
         if (mRecipeEditIngredients != null) mRecipeEditIngredients.setOnClickListener(this);

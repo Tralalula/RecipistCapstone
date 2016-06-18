@@ -17,24 +17,12 @@
             android:layout_height="wrap_content"
             android:background="?attr/colorPrimary"
             android:elevation="4dp"
+            android:gravity="start"
             app:navigationIcon="@drawable/close"
             app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
             app:titleTextColor="@color/textColorPrimary">
 
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="26dp"
-                android:clickable="true"
-                android:gravity="end">
 
-                <ImageView
-                    android:id="@+id/sort_ingredients"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:background="@color/textColorSecondary"
-                    android:src="@drawable/sort" />
-            </RelativeLayout>
         </android.support.v7.widget.Toolbar>
 
         <ScrollView
@@ -50,18 +38,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="26dp"
-                    android:orientation="vertical">
-
-                    <EditText
-                        android:id="@+id/ingredient"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:hint="250 grams of sugar"
-                        android:inputType="text"
-                        android:maxLines="1"
-                        android:textColor="@color/textColorPrimary"
-                        android:textSize="@dimen/medium_small_text_size" />
-                </com.jmedeisis.draglinearlayout.DragLinearLayout>
+                    android:orientation="vertical" />
 
                 <Button
                     android:id="@+id/add_ingredient"
