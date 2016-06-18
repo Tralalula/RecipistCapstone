@@ -14,12 +14,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.example.tobias.recipist.R;
 import com.jmedeisis.draglinearlayout.DragLinearLayout;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -43,12 +45,20 @@ public class CreateIngredientsActivity extends AppCompatActivity implements View
     private ArrayList<Ingredients.Ingredient> ingredients;
 
     EditText ingredient;
+    ImageView sortIngredients;
     Button addIngredient;
+    DragLinearLayout linearLayout;
+
+    private boolean mSortIngredientsMode;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_ingredients);
+
+        mSortIngredientsMode = false;
+        sortIngredients = (ImageView) findViewById(R.id.sort_ingredients);
+        if (sortIngredients != null) sortIngredients.setOnClickListener(this);
 
         addIngredient = (Button) findViewById(R.id.add_ingredient);
         if (addIngredient != null) addIngredient.setOnClickListener(this);
@@ -64,7 +74,7 @@ public class CreateIngredientsActivity extends AppCompatActivity implements View
 
 //        CoordinatorLayout coordinatorLayout = (CoordinatorLayout) findViewById(R.id.coord_layout);
 
-        final DragLinearLayout linearLayout = (DragLinearLayout) findViewById(R.id.lin);
+        linearLayout = (DragLinearLayout) findViewById(R.id.lin);
 
         final EditText editText = new EditText(this);
         editText.setLayoutParams(new ViewGroup.LayoutParams(
@@ -75,48 +85,69 @@ public class CreateIngredientsActivity extends AppCompatActivity implements View
         editText.setHint("150 kilos of pancakes");
         editText.setMaxLines(1);
         editText.setInputType(InputType.TYPE_CLASS_TEXT);
-        Drawable draw = getDrawable(R.drawable.ic_delete_black_24dp);
-        editText.setCompoundDrawablesWithIntrinsicBounds(null, null, draw, null);
+//        Drawable draw = getDrawable(R.drawable.ic_delete_black_24dp);
+//        editText.setCompoundDrawablesWithIntrinsicBounds(null, null, draw, null);
 //        editText.setCompoundDrawables(null, null, drawable, null);
 
         if (linearLayout != null) {
             linearLayout.addView(editText);
         }
 
-        // http://stackoverflow.com/questions/13135447/setting-onclicklistner-for-the-drawable-right-of-an-edittext/26269435#26269435
-        editText.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                final int DRAWABLE_LEFT = 0;
-                final int DRAWABLE_TOP = 1;
-                final int DRAWABLE_RIGHT = 2;
-                final int DRAWABLE_BOTTOM = 3;
-
-                if (event.getAction() == MotionEvent.ACTION_UP) {
-                    if (event.getRawX() >= (editText.getRight() - editText.getCompoundDrawables()[DRAWABLE_RIGHT].getBounds().width())) {
-                        if (linearLayout != null) {
-                            linearLayout.removeView(editText);
-                        }
-                        System.out.println("YOU CLICKED IT, MUAHAHAH");
-                        return true;
-                    }
-                }
-                return false;
-            }
-        });
-
         for (int i = 0; i < (linearLayout != null ? linearLayout.getChildCount() : 0); i++) {
             View child = linearLayout.getChildAt(i);
-            linearLayout.setViewDraggable(child, child);
+//            linearLayout.setViewDraggable(child, child);
+
+            final EditText c = (EditText) child;
+
+            Drawable draw = getDrawable(R.drawable.ic_delete_black_24dp);
+            c.setCompoundDrawablesWithIntrinsicBounds(null, null, draw, null);
+            c.setOnTouchListener(new View.OnTouchListener() {
+                @Override
+                public boolean onTouch(View v, MotionEvent event) {
+                    final int DRAWABLE_LEFT = 0;
+                    final int DRAWABLE_TOP = 1;
+                    final int DRAWABLE_RIGHT = 2;
+                    final int DRAWABLE_BOTTOM = 3;
+
+                    if (event.getAction() == MotionEvent.ACTION_UP) {
+                        if (event.getRawX() >= (c.getRight() - c.getCompoundDrawables()[DRAWABLE_RIGHT].getBounds().width())) {
+                            linearLayout.removeView(c);
+                            System.out.println("YOU CLICKED IT, MUAHAHAH");
+                            return true;
+                        }
+                    }
+                    return false;
+                }
+            });
         }
+
+        // http://stackoverflow.com/questions/13135447/setting-onclicklistner-for-the-drawable-right-of-an-edittext/26269435#26269435
+//        editText.setOnTouchListener(new View.OnTouchListener() {
+//            @Override
+//            public boolean onTouch(View v, MotionEvent event) {
+//                final int DRAWABLE_LEFT = 0;
+//                final int DRAWABLE_TOP = 1;
+//                final int DRAWABLE_RIGHT = 2;
+//                final int DRAWABLE_BOTTOM = 3;
+//
+//                if (event.getAction() == MotionEvent.ACTION_UP) {
+//                    if (event.getRawX() >= (editText.getRight() - editText.getCompoundDrawables()[DRAWABLE_RIGHT].getBounds().width())) {
+//                        if (linearLayout != null) {
+//                            linearLayout.removeView(editText);
+//                        }
+//                        System.out.println("YOU CLICKED IT, MUAHAHAH");
+//                        return true;
+//                    }
+//                }
+//                return false;
+//            }
+//        });
     }
 
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.add_ingredient:
-                LinearLayout linearLayout = (LinearLayout) findViewById(R.id.lin);
-
                 EditText editText = new EditText(this);
                 editText.setLayoutParams(new ViewGroup.LayoutParams(
                         ViewGroup.LayoutParams.MATCH_PARENT,
@@ -129,6 +160,47 @@ public class CreateIngredientsActivity extends AppCompatActivity implements View
 
                 if (linearLayout != null) {
                     linearLayout.addView(editText);
+                }
+                break;
+            case R.id.sort_ingredients:
+                if (!mSortIngredientsMode) {
+                    for (int i = 0; i < (linearLayout != null ? linearLayout.getChildCount() : 0); i++) {
+                        View child = linearLayout.getChildAt(i);
+                        Drawable draw = getDrawable(R.drawable.ic_swap_vert_black_24dp);
+                        EditText editTextChild = (EditText) child;
+                        editTextChild.setCompoundDrawablesWithIntrinsicBounds(null, null, draw, null);
+                        linearLayout.setViewDraggable(child, child);
+                    }
+                    Picasso.with(this).load(R.drawable.ic_done_black_24dp).into(sortIngredients);
+                    mSortIngredientsMode = true;
+                } else {
+                    for (int i = 0; i < (linearLayout != null ? linearLayout.getChildCount() : 0); i++) {
+                        View child = linearLayout.getChildAt(i);
+                        final EditText c = (EditText) child;
+
+                        Drawable draw = getDrawable(R.drawable.ic_delete_black_24dp);
+                        c.setCompoundDrawablesWithIntrinsicBounds(null, null, draw, null);
+                        c.setOnTouchListener(new View.OnTouchListener() {
+                            @Override
+                            public boolean onTouch(View v, MotionEvent event) {
+                                final int DRAWABLE_LEFT = 0;
+                                final int DRAWABLE_TOP = 1;
+                                final int DRAWABLE_RIGHT = 2;
+                                final int DRAWABLE_BOTTOM = 3;
+
+                                if (event.getAction() == MotionEvent.ACTION_UP) {
+                                    if (event.getRawX() >= (c.getRight() - c.getCompoundDrawables()[DRAWABLE_RIGHT].getBounds().width())) {
+                                        linearLayout.removeView(c);
+                                        System.out.println("YOU CLICKED IT, MUAHAHAH");
+                                        return true;
+                                    }
+                                }
+                                return false;
+                            }
+                        });
+                    }
+                    Picasso.with(this).load(R.drawable.ic_sort_black_24dp).into(sortIngredients);
+                    mSortIngredientsMode = false;
                 }
                 break;
         }
