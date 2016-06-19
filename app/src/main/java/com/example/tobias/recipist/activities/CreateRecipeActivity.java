@@ -8,6 +8,7 @@ import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -226,6 +227,12 @@ public class CreateRecipeActivity extends BaseActivity implements View.OnClickLi
     //    private String mImage = null;
     private void submitRecipe() {
         final String title = mRecipeTitle.getText().toString();
+
+        if (TextUtils.isEmpty(title)) {
+            mRecipeTitle.setError("Required");
+            return;
+        }
+
         String image = null;
         if (mRecipeBitmapImage != null && !mRecipeBitmapImage.isRecycled()) {
             image = mCamera.decodeBitmapToBase64String(mRecipeBitmapImage);
@@ -239,9 +246,7 @@ public class CreateRecipeActivity extends BaseActivity implements View.OnClickLi
         final String time = mRecipeTime.getText().toString();
         final String servings = mRecipeServings.getText().toString();
 
-        ArrayList<Steps.Step> testSteps = new ArrayList<>();
-        testSteps.add(new Steps.Step("Heat oil till flash point."));
-        writeNewRecipe(title, image, progress, time, servings, ingredients, testSteps);
+        writeNewRecipe(title, image, progress, time, servings, ingredients, steps);
 
         finish();
     }

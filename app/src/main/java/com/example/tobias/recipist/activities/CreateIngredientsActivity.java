@@ -13,7 +13,6 @@ import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.ViewParent;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -21,9 +20,7 @@ import android.widget.ImageView;
 import com.example.tobias.recipist.R;
 import com.jmedeisis.draglinearlayout.DragLinearLayout;
 
-import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Arrays;
 
 import data.Ingredients;
 import util.Utilities;
