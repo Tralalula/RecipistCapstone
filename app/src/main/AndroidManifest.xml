@@ -52,6 +52,15 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".activities.CreateRecipeActivity" />
         </activity>
+
+        <activity android:name=".activities.CreateStepActivity"
+            android:label="Create Step"
+            android:windowSoftInputMode="adjustResize"
+            android:parentActivityName=".activities.CreateRecipeActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".activities.CreateRecipeActivity" />
+        </activity>
     </application>
 
 </manifest>

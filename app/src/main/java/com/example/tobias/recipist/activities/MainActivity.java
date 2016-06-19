@@ -73,10 +73,10 @@ public class MainActivity extends AppCompatActivity {
 //        Bitmap bitmapDecode = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
 
 //        writeNewRecipe(recipeId, title, image, progress, time, servings, ingredients, steps);
-        writeNewIngredient(recipeId, "1", "5", "pounds", "apples, peeled, cored, and sliced 1/2 inch thick");
-        writeNewIngredient(recipeId, "3", "100-150", "grams", "sugar, plus more for sprinkling");
-
-        writeNewStep(recipeId, "2", "Adjust oven rack to lower middle position and place a heavy rimmed baking sheet on it. Preheat oven to 425F (220C). Toss apple slices with sugar, cornstarch, cinnamon, and lemon juice and zest until well-coated. Let rest for 10 minutes.", null, 10);
+//        writeNewIngredient(recipeId, "1", "5", "pounds", "apples, peeled, cored, and sliced 1/2 inch thick");
+//        writeNewIngredient(recipeId, "3", "100-150", "grams", "sugar, plus more for sprinkling");
+//
+//        writeNewStep(recipeId, "2", "Adjust oven rack to lower middle position and place a heavy rimmed baking sheet on it. Preheat oven to 425F (220C). Toss apple slices with sugar, cornstarch, cinnamon, and lemon juice and zest until well-coated. Let rest for 10 minutes.", null, 10);
 
     }
 
@@ -97,11 +97,11 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    private void writeNewRecipe(String recipeId, String title, String image, boolean progress, int time, String servings, List<Ingredient> ingredients, List<Step> steps) {
-        Recipe recipe = new Recipe(title, image, progress, time, servings, ingredients, steps);
-
-        mRootRef.child("recipes").child(recipeId).setValue(recipe);
-    }
+//    private void writeNewRecipe(String recipeId, String title, String image, boolean progress, int time, String servings, List<Ingredient> ingredients, List<Step> steps) {
+//        Recipe recipe = new Recipe(title, image, progress, time, servings, ingredients, steps);
+//
+//        mRootRef.child("recipes").child(recipeId).setValue(recipe);
+//    }
 
     private void writeNewIngredient(String recipeId, String ingredientId, String quantity, String measure, String ingredient) {
         Ingredient ing = new Ingredient(quantity, measure, ingredient);

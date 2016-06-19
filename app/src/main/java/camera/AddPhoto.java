@@ -7,12 +7,17 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AlertDialog;
+import android.util.Base64;
 
+import com.example.tobias.recipist.R;
+
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
 
@@ -125,5 +130,24 @@ public class AddPhoto {
             if (mUserChosenTask.equals("Take Photo")) cameraIntent();
             else if (mUserChosenTask.equals("Choose from Library")) galleryIntent();
         }
+    }
+
+    // http://stackoverflow.com/questions/26292969/can-i-store-image-files-in-firebase-using-java-api
+    public String decodeDrawableToBase64String(int drawable) {
+        Bitmap bitmap = BitmapFactory.decodeResource(mContext.getResources(), drawable);
+        ByteArrayOutputStream byteArrOpStrm = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.PNG, 100, byteArrOpStrm);
+        bitmap.recycle();
+        byte[] bytes = byteArrOpStrm.toByteArray();
+        return Base64.encodeToString(bytes, Base64.DEFAULT);
+    }
+
+    // http://stackoverflow.com/questions/26292969/can-i-store-image-files-in-firebase-using-java-api
+    public String decodeBitmapToBase64String(Bitmap bitmap) {
+        ByteArrayOutputStream byteArrOpStrm = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.PNG, 100, byteArrOpStrm);
+        bitmap.recycle();
+        byte[] bytes = byteArrOpStrm.toByteArray();
+        return Base64.encodeToString(bytes, Base64.DEFAULT);
     }
 }
