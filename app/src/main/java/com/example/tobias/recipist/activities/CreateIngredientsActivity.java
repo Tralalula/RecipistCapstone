@@ -32,15 +32,15 @@ import util.Utilities;
  * Created by Tobias on 17-06-2016.
  */
 public class CreateIngredientsActivity extends AppCompatActivity implements View.OnClickListener {
-    private String[] measurements = {
-            "g", "gr", "gram", "grams",
-            "cups", "cup",
-            "tsp", "tsps", "teaspoon", "teaspoons",
-            "tbsp", "tbsps", "tablespoon", "tablespoons",
-            "kg", "kgs", "kilo", "kilos", "kilogram", "kilograms",
-            "oz", "ozs", "ounce", "ounces",
-            "pound", "pounds"
-    };
+//    private String[] measurements = {
+//            "g", "gr", "gram", "grams",
+//            "cups", "cup",
+//            "tsp", "tsps", "teaspoon", "teaspoons",
+//            "tbsp", "tbsps", "tablespoon", "tablespoons",
+//            "kg", "kgs", "kilo", "kilos", "kilogram", "kilograms",
+//            "oz", "ozs", "ounce", "ounces",
+//            "pound", "pounds"
+//    };
 
     private ArrayList<Ingredients.Ingredient> oldIngredients;
     private ArrayList<Ingredients.Ingredient> newIngredients;
@@ -69,12 +69,7 @@ public class CreateIngredientsActivity extends AppCompatActivity implements View
         addIngredient = (Button) findViewById(R.id.add_ingredient);
         if (addIngredient != null) addIngredient.setOnClickListener(this);
 
-        if (dragLinearLayout == null) {
-            dragLinearLayout = (DragLinearLayout) findViewById(R.id.lin);
-        } else {
-            ViewParent parent = dragLinearLayout.getParent();
-            if (parent != null) ((ViewGroup) parent).removeView(dragLinearLayout);
-        }
+        dragLinearLayout = (DragLinearLayout) findViewById(R.id.lin);
 
         floatingActionButton = (FloatingActionButton) findViewById(R.id.save_ingredients);
         if (floatingActionButton != null) floatingActionButton.setOnClickListener(this);
@@ -108,6 +103,7 @@ public class CreateIngredientsActivity extends AppCompatActivity implements View
         }
 
         mSortIngredientsMode = savedInstanceState.getBoolean("SORTMODE");
+        handleIngredientsMode();
     }
 
     @Override
