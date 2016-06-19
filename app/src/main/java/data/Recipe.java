@@ -16,12 +16,12 @@ public class Recipe {
     public String time;
     public String servings;
     public ArrayList<Ingredients.Ingredient> ingredients;
-    public List<Step> steps;
+    public ArrayList<Steps.Step> steps;
 
     public Recipe() {
     }
 
-    public Recipe(String title, String image, boolean progress, String time, String servings, ArrayList<Ingredients.Ingredient> ingredients, List<Step> steps) {
+    public Recipe(String title, String image, boolean progress, String time, String servings, ArrayList<Ingredients.Ingredient> ingredients, ArrayList<Steps.Step> steps) {
         this.title = title;
         this.image = image;
         this.progress = progress;

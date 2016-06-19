@@ -153,62 +153,52 @@
             </LinearLayout>
 
             <LinearLayout
-                android:id="@+id/recipe_method"
+                android:id="@+id/recipe_steps"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/recipe_ingredients"
-                android:orientation="vertical"
-                android:padding="4dp">
+                android:layout_below="@+id/recipe_ingredients"
+                android:orientation="vertical">
 
-                <TextView
-                    android:id="@+id/recipe_method_title"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Steps"
-                    android:textColor="@color/textColorPrimary"
-                    android:textSize="@dimen/view_recipe_method_title_text_size" />
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:id="@+id/recipe_steps_title"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:text="Steps"
+                        android:textColor="@color/textColorPrimary"
+                        android:textSize="@dimen/view_recipe_ingredients_title_text_size" />
+
+                    <Button
+                        android:id="@+id/recipe_edit_steps"
+                        android:layout_width="64dp"
+                        android:layout_height="32dp"
+                        android:layout_alignParentEnd="true"
+                        android:text="Edit"
+                        android:textColor="@color/textColorPrimary"
+                        android:textSize="10sp" />
+
+                </RelativeLayout>
 
                 <LinearLayout
+                    android:id="@+id/recipe_steps_list"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical">
+                    android:background="@drawable/border"
+                    android:orientation="vertical"
+                    android:padding="4dp">
 
-                    <LinearLayout
-                        android:layout_width="match_parent"
+                    <TextView
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:background="@drawable/border"
-                        android:orientation="horizontal"
-                        android:padding="4dp"
+                        android:text="No steps added"
                         android:textColor="@color/textColorSecondary"
-                        android:weightSum="1">
-
-                        <TextView
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="0.5"
-                            android:text="Adjust oven rack to lower middle position and place a heavy rimmed baking sheet on it. Preheat oven to 425F (220C). Toss apple slices with sugar, cornstarch, cinnamon, and lemon juice and zest untill well-coated. Let rest for 10 minutes"
-                            android:textColor="@color/textColorSecondary"
-                            android:textSize="@dimen/view_recipe_method_text_size" />
-
-                        <ImageView
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="0.5"
-                            android:src="@drawable/b" />
-                    </LinearLayout>
-
+                        android:textSize="@dimen/medium_text_size" />
                 </LinearLayout>
-
-                <Button
-                    android:id="@+id/add_step"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:text="Add Step"
-                    android:textColor="@color/textColorPrimary"
-                    android:textSize="@dimen/medium_small_text_size" />
             </LinearLayout>
-
         </RelativeLayout>
 
     </ScrollView>

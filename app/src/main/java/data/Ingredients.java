@@ -71,7 +71,6 @@ public class Ingredients {
         }
 
         public static final Parcelable.Creator<Ingredient> CREATOR = new Parcelable.Creator<Ingredient>() {
-
             @Override
             public Ingredient createFromParcel(Parcel source) {
                 return new Ingredient(source);

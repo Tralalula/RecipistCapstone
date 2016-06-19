@@ -4,13 +4,10 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
-import android.support.v7.app.AppCompatActivity;
-import android.util.Base64;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -23,21 +20,19 @@ import com.example.tobias.recipist.R;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
-import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
-import java.util.List;
 
 import camera.AddPhoto;
 import data.Ingredients;
 import data.Recipe;
-import data.Step;
+import data.Steps;
 import util.Utilities;
 
 // For handling camera images I used the following guides:
 // http://www.theappguruz.com/blog/android-take-photo-camera-gallery-code-sample
 // http://blog-emildesign.rhcloud.com/?p=590
 // https://developer.android.com/training/camera/photobasics.html
-public class CreateRecipeActivity extends AppCompatActivity implements View.OnClickListener {
+public class CreateRecipeActivity extends BaseActivity implements View.OnClickListener {
     private DatabaseReference mDatabase;
 
     private static final String BITMAP_STORAGE_KEY = "viewbitmap";
@@ -51,14 +46,17 @@ public class CreateRecipeActivity extends AppCompatActivity implements View.OnCl
     private Bitmap mRecipeBitmapImage;
 
     private Button mRecipeEditIngredients;
-    private Button mRecipeAddStep;
+    private Button mRecipeEditSteps;
     private FloatingActionButton mSaveRecipe;
 
     private ArrayList<Ingredients.Ingredient> ingredients;
+    private ArrayList<Steps.Step> steps;
 
     private LinearLayout mRecipeIngredientsList;
 
     private AddPhoto mCamera;
+
+    private LinearLayout mRecipeStepsList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,9 +71,11 @@ public class CreateRecipeActivity extends AppCompatActivity implements View.OnCl
         mRecipeTime = (EditText) findViewById(R.id.recipe_time);
         mRecipeServings = (EditText) findViewById(R.id.recipe_servings);
         mRecipeEditIngredients = (Button) findViewById(R.id.recipe_edit_ingredients);
-        mRecipeAddStep = (Button) findViewById(R.id.add_step);
+        mRecipeEditSteps = (Button) findViewById(R.id.recipe_edit_steps);
         mRecipeIngredientsList = (LinearLayout) findViewById(R.id.recipe_ingredients_list);
         mSaveRecipe = (FloatingActionButton) findViewById(R.id.save_recipe);
+
+        mRecipeStepsList = (LinearLayout) findViewById(R.id.recipe_steps_list);
 
 //        Ingredients.Ingredient ingredient = new Ingredients.Ingredient("100", "grams", "sugar");
 //        ingredients.add(ingredient);
@@ -83,7 +83,7 @@ public class CreateRecipeActivity extends AppCompatActivity implements View.OnCl
         if (mRecipeImage != null) mRecipeImage.setOnClickListener(this);
         if (mRecipeEditIngredients != null) mRecipeEditIngredients.setOnClickListener(this);
         if (mSaveRecipe != null) mSaveRecipe.setOnClickListener(this);
-        if (mRecipeAddStep != null) mRecipeAddStep.setOnClickListener(this);
+        if (mRecipeEditSteps != null) mRecipeEditSteps.setOnClickListener(this);
 
 //        for (Ingredients.Ingredient d : ingredients) {
 //            System.out.println("CREME BRULEE " + d.getIngredient());
@@ -92,6 +92,11 @@ public class CreateRecipeActivity extends AppCompatActivity implements View.OnCl
         if (ingredients == null) {
             ingredients = new ArrayList<>();
             updateIngredients();
+        }
+
+        if (steps == null) {
+            steps = new ArrayList<>();
+            updateSteps();
         }
 
         mCamera = new AddPhoto(this);
@@ -144,9 +149,10 @@ public class CreateRecipeActivity extends AppCompatActivity implements View.OnCl
             case R.id.save_recipe:
                 submitRecipe();
                 break;
-            case R.id.add_step:
+            case R.id.recipe_edit_steps:
                 Intent stepIntent = new Intent(this, CreateStepActivity.class);
-                startActivity(stepIntent);
+                stepIntent.putParcelableArrayListExtra("STEPS", steps);
+                startActivityForResult(stepIntent, 667);
                 break;
         }
     }
@@ -162,7 +168,7 @@ public class CreateRecipeActivity extends AppCompatActivity implements View.OnCl
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (resultCode == Activity.RESULT_OK) {
+        if (resultCode == Activity.RESULT_OK && data != null) {
             if (requestCode == AddPhoto.SELECT_FILE_CODE) {
                 Bitmap bitmap = mCamera.onSelectFromGalleryResult(data);
                 mRecipeImage.setImageBitmap(bitmap);
@@ -172,13 +178,11 @@ public class CreateRecipeActivity extends AppCompatActivity implements View.OnCl
                 mRecipeImage.setImageBitmap(bitmap);
                 mRecipeBitmapImage = bitmap;
             } else if (requestCode == 666) {
-                if (data != null) {
-                    ingredients = data.getParcelableArrayListExtra("INGREDIENTS");
-                    updateIngredients();
-//                    for (Ingredients.Ingredient ingredient : ingredients) {
-//                        System.out.println("PANCAKE " + ingredient.getIngredient());
-//                    }
-                }
+                ingredients = data.getParcelableArrayListExtra("INGREDIENTS");
+                updateIngredients();
+            } else if (requestCode == 667) {
+                steps = data.getParcelableArrayListExtra("STEPS");
+                updateSteps();
             }
         }
     }
@@ -200,6 +204,18 @@ public class CreateRecipeActivity extends AppCompatActivity implements View.OnCl
         }
     }
 
+    private void updateSteps() {
+        mRecipeStepsList.removeAllViews();
+
+        if (steps == null || steps.isEmpty()) {
+            addToLinearLayout(this, mRecipeStepsList, "NOT AVAILABLE...", Typeface.NORMAL);
+        } else {
+            for (final Steps.Step step : steps) {
+                addToLinearLayout(this, mRecipeStepsList, step.getMethod(), Typeface.NORMAL);
+            }
+        }
+    }
+
     private void addToLinearLayout(Context context, LinearLayout linearLayout, String text, int typeface) {
         TextView textView = new TextView(context);
         textView.setText(text);
@@ -207,24 +223,31 @@ public class CreateRecipeActivity extends AppCompatActivity implements View.OnCl
         linearLayout.addView(textView);
     }
 
+    //    private String mImage = null;
     private void submitRecipe() {
         final String title = mRecipeTitle.getText().toString();
         String image = null;
         if (mRecipeBitmapImage != null && !mRecipeBitmapImage.isRecycled()) {
             image = mCamera.decodeBitmapToBase64String(mRecipeBitmapImage);
         }
+//        try {
+//            decodeImage();
+//        } catch (IOException ex) {
+//            ex.printStackTrace();
+//        }
         final boolean progress = mRecipeProgress.isChecked();
         final String time = mRecipeTime.getText().toString();
         final String servings = mRecipeServings.getText().toString();
 
-        List<Step> testSteps = new ArrayList<>();
-        testSteps.add(new Step("1", "whisk whisk whisk", "n/a", 10));
-
+        ArrayList<Steps.Step> testSteps = new ArrayList<>();
+        testSteps.add(new Steps.Step("Heat oil till flash point."));
         writeNewRecipe(title, image, progress, time, servings, ingredients, testSteps);
+
+        finish();
     }
 
     private void writeNewRecipe(String title, String image, boolean progress, String time,
-                                String servings, ArrayList<Ingredients.Ingredient> ingredients, List<Step> steps) {
+                                String servings, ArrayList<Ingredients.Ingredient> ingredients, ArrayList<Steps.Step> steps) {
         String key = mDatabase.child("recipes").push().getKey();
         Recipe recipe = new Recipe(
                 title,
@@ -235,6 +258,25 @@ public class CreateRecipeActivity extends AppCompatActivity implements View.OnCl
                 ingredients,
                 steps
         );
+
         mDatabase.child("recipes").child(key).setValue(recipe);
     }
+
+    // http://stackoverflow.com/questions/12897205/android-progress-dialog-not-showing
+//    public void decodeImage() throws IOException {
+//        final ProgressDialog progressDialog = new ProgressDialog(this);
+//        progressDialog.setMessage("Loading...");
+//        progressDialog.setCancelable(false);
+//        progressDialog.show();
+//
+//        Thread thread = new Thread() {
+//            public void Run() {
+//                if (mRecipeBitmapImage != null && !mRecipeBitmapImage.isRecycled()) {
+//                    mImage = mCamera.decodeBitmapToBase64String(mRecipeBitmapImage);
+//                }
+//                progressDialog.dismiss();
+//            }
+//        };
+//        thread.start();
+//    }
 }

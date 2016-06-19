@@ -2,13 +2,9 @@ package com.example.tobias.recipist.activities;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.media.Image;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v7.app.AppCompatActivity;
-import android.text.Html;
-import android.text.format.DateUtils;
 import android.util.Base64;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -21,10 +17,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
 
-import butterknife.BindView;
-import butterknife.ButterKnife;
 import data.Recipe;
-import data.Step;
 
 /**
  * Created by Tobias on 08-06-2016.

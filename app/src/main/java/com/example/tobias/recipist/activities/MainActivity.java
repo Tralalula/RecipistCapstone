@@ -1,14 +1,11 @@
 package com.example.tobias.recipist.activities;
 
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Base64;
 import android.view.Menu;
 import android.view.MenuItem;
 
@@ -19,13 +16,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-import java.io.ByteArrayOutputStream;
-import java.util.List;
-
 import adapters.MainPageAdapter;
-import data.Ingredients.Ingredient;
-import data.Recipe;
-import data.Step;
 
 public class MainActivity extends AppCompatActivity {
     private DatabaseReference mRootRef = FirebaseDatabase.getInstance().getReference();
@@ -49,23 +40,23 @@ public class MainActivity extends AppCompatActivity {
                 tabLayout.setupWithViewPager(viewPager);
             }
         }
-        String recipeId = "3";
-        String title = "Gooey Apple Pie";
-//        String image = "";
-        boolean progress = true;
-        int time = 360;
-        String servings = "8-12";
-        List<Ingredient> ingredients = null;
-        List<Step> steps = null;
-
-
-        //http://stackoverflow.com/questions/26292969/can-i-store-image-files-in-firebase-using-java-api
-        Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.a);
-        ByteArrayOutputStream byteArrOpStrm = new ByteArrayOutputStream();
-        bitmap.compress(Bitmap.CompressFormat.PNG, 100, byteArrOpStrm);
-        bitmap.recycle();
-        byte[] bytes = byteArrOpStrm.toByteArray();
-        String image = Base64.encodeToString(bytes, Base64.DEFAULT);
+//        String recipeId = "3";
+//        String title = "Gooey Apple Pie";
+////        String image = "";
+//        boolean progress = true;
+//        int time = 360;
+//        String servings = "8-12";
+//        List<Ingredient> ingredients = null;
+//        List<Step> steps = null;
+//
+//
+//        //http://stackoverflow.com/questions/26292969/can-i-store-image-files-in-firebase-using-java-api
+//        Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.a);
+//        ByteArrayOutputStream byteArrOpStrm = new ByteArrayOutputStream();
+//        bitmap.compress(Bitmap.CompressFormat.PNG, 100, byteArrOpStrm);
+//        bitmap.recycle();
+//        byte[] bytes = byteArrOpStrm.toByteArray();
+//        String image = Base64.encodeToString(bytes, Base64.DEFAULT);
 //
 //        mConditionRef.setValue(image);
 //
@@ -102,18 +93,18 @@ public class MainActivity extends AppCompatActivity {
 //
 //        mRootRef.child("recipes").child(recipeId).setValue(recipe);
 //    }
-
-    private void writeNewIngredient(String recipeId, String ingredientId, String quantity, String measure, String ingredient) {
-        Ingredient ing = new Ingredient(quantity, measure, ingredient);
-
-        mRootRef.child("recipes").child(recipeId).child("ingredients").child(ingredientId).setValue(ing);
-    }
-
-    private void writeNewStep(String recipeId, String stepId, String method, String image, int time) {
-        Step step = new Step(stepId, method, image, time);
-
-        mRootRef.child("recipes").child(recipeId).child("steps").child(stepId).setValue(step);
-    }
+//
+//    private void writeNewIngredient(String recipeId, String ingredientId, String quantity, String measure, String ingredient) {
+//        Ingredient ing = new Ingredient(quantity, measure, ingredient);
+//
+//        mRootRef.child("recipes").child(recipeId).child("ingredients").child(ingredientId).setValue(ing);
+//    }
+//
+//    private void writeNewStep(String recipeId, String stepId, String method, String image, int time) {
+//        Step step = new Step(stepId, method, image, time);
+//
+//        mRootRef.child("recipes").child(recipeId).child("steps").child(stepId).setValue(step);
+//    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
