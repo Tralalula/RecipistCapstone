@@ -22,7 +22,6 @@
             app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
             app:titleTextColor="@color/textColorPrimary">
 
-
         </android.support.v7.widget.Toolbar>
 
         <ScrollView

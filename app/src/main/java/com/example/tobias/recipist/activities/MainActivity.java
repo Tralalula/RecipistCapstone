@@ -3,8 +3,11 @@ package com.example.tobias.recipist.activities;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutCompat;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -17,6 +20,8 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import adapters.MainPageAdapter;
+import fragments.FirebaseListFragment;
+import fragments.RecipesListFragment;
 
 public class MainActivity extends AppCompatActivity {
     private DatabaseReference mRootRef = FirebaseDatabase.getInstance().getReference();
@@ -29,7 +34,30 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.my_toolbar);
         setSupportActionBar(toolbar);
 
-        MainPageAdapter mainPageAdapter = new MainPageAdapter(getSupportFragmentManager());
+//        MainPageAdapter mainPageAdapter = new MainPageAdapter(getSupportFragmentManager());
+        FragmentPagerAdapter mainPageAdapter = new FragmentPagerAdapter(getSupportFragmentManager()) {
+            private final Fragment[] mFragments = new Fragment[]{
+                    new RecipesListFragment()
+            };
+
+            private final String[] mFragmentNames = new String[]{
+              "List"
+            };
+
+            @Override
+            public Fragment getItem(int position) {
+                return mFragments[position];
+            }
+
+            public int getCount() {
+                return mFragments.length;
+            }
+
+            @Override
+            public CharSequence getPageTitle(int position) {
+                return mFragmentNames[position];
+            }
+        };
 
         ViewPager viewPager = (ViewPager) findViewById(R.id.pager);
         if (viewPager != null) {

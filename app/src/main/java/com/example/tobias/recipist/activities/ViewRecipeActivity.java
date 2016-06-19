@@ -56,29 +56,29 @@ public class ViewRecipeActivity extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
-        mRootRef.child("recipes").child("3").addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                Recipe recipe = dataSnapshot.getValue(Recipe.class);
-
-                System.out.println("pew pew boomerang " + recipe.time);
-                mRecipeTime.setText(recipe.time + "");
-
-                byte[] decodedString = Base64.decode(recipe.image, Base64.DEFAULT);
-                Bitmap bitmapDecode = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
-
-                mRecipeImage.setImageBitmap(bitmapDecode);
-//                Picasso.with(getApplicationContext())
-//                        .load(bitmapDecode)
-//                        .fit()
-//                        .into(mRecipeImage);
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
-        });
+//        mRootRef.child("recipes").child("3").addValueEventListener(new ValueEventListener() {
+//            @Override
+//            public void onDataChange(DataSnapshot dataSnapshot) {
+//                Recipe recipe = dataSnapshot.getValue(Recipe.class);
+//
+//                System.out.println("pew pew boomerang " + recipe.time);
+//                mRecipeTime.setText(recipe.time + "");
+//
+//                byte[] decodedString = Base64.decode(recipe.image, Base64.DEFAULT);
+//                Bitmap bitmapDecode = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
+//
+//                mRecipeImage.setImageBitmap(bitmapDecode);
+////                Picasso.with(getApplicationContext())
+////                        .load(bitmapDecode)
+////                        .fit()
+////                        .into(mRecipeImage);
+//            }
+//
+//            @Override
+//            public void onCancelled(DatabaseError databaseError) {
+//
+//            }
+//        });
     }
 
 }

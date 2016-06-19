@@ -8,7 +8,10 @@ import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -46,6 +49,8 @@ public class CreateRecipeActivity extends BaseActivity implements View.OnClickLi
     private ImageView mRecipeImage;
     private Bitmap mRecipeBitmapImage;
 
+    private Toolbar mToolbar;
+
     private Button mRecipeEditIngredients;
     private Button mRecipeEditSteps;
     private FloatingActionButton mSaveRecipe;
@@ -65,6 +70,9 @@ public class CreateRecipeActivity extends BaseActivity implements View.OnClickLi
         setContentView(R.layout.activity_create_recipe);
 
         mDatabase = FirebaseDatabase.getInstance().getReference();
+
+        mToolbar = (Toolbar) findViewById(R.id.app_bar);
+        setSupportActionBar(mToolbar);
 
         mRecipeTitle = (EditText) findViewById(R.id.recipe_title);
         mRecipeImage = (ImageView) findViewById(R.id.recipe_image);
@@ -186,6 +194,17 @@ public class CreateRecipeActivity extends BaseActivity implements View.OnClickLi
                 updateSteps();
             }
         }
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case Utilities.TOOLBAR_NAVIGATION_ICON_CLICK_ID:
+                onBackPressed();
+                return true;
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 
     private void updateIngredients() {
