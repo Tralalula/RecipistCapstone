@@ -27,7 +27,7 @@ import viewholders.RecipeViewHolder;
  * Created by Tobias on 20-06-2016.
  */
 public abstract class FirebaseGridFragment extends Fragment {
-    private int PORTRAIT_NUM_OF_RECIPES = 2;
+    private int PORTRAIT_NUM_OF_RECIPES = 3;
     private int LANDSCAPE_NUM_OF_RECIPES = 3;
 
     private DatabaseReference mDatabase;
@@ -41,10 +41,12 @@ public abstract class FirebaseGridFragment extends Fragment {
         super.onCreateView(inflater, container, savedInstanceState);
         View rootView = inflater.inflate(R.layout.fragment_gallery_view, container, false);
 
+
         mDatabase = FirebaseDatabase.getInstance().getReference();
 
         mRecyclerView = (RecyclerView) rootView.findViewById(R.id.recycler_view);
         mRecyclerView.setHasFixedSize(true);
+        mRecyclerView.setBackgroundColor(getResources().getColor(R.color.windowBackgroundDark));
 
         return rootView;
     }
@@ -53,16 +55,21 @@ public abstract class FirebaseGridFragment extends Fragment {
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
+        int layout;
         if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT) {
             mLayoutManager = new GridLayoutManager(getActivity(), PORTRAIT_NUM_OF_RECIPES);
+            layout = R.layout.recipe_gallery_view_item;
         } else {
             mLayoutManager = new GridLayoutManager(getActivity(), LANDSCAPE_NUM_OF_RECIPES);
+            layout = R.layout.recipe_gallery_landscape_view_item;
         }
 
         mRecyclerView.setLayoutManager(mLayoutManager);
         Query recipesQuery = getQuery(mDatabase);
+
+
         mAdapter = new FirebaseRecyclerAdapter<Recipe, RecipeViewHolder>(Recipe.class,
-                R.layout.recipe_gallery_view_item, RecipeViewHolder.class, recipesQuery) {
+                layout, RecipeViewHolder.class, recipesQuery) {
             @Override
             protected void populateViewHolder(RecipeViewHolder viewHolder, Recipe model, int position) {
                 final DatabaseReference recipeRef = getRef(position);
@@ -77,7 +84,7 @@ public abstract class FirebaseGridFragment extends Fragment {
                     }
                 });
 
-                viewHolder.bindToPost(model, null);
+                viewHolder.bindToPost(mRecyclerView.getContext(), model);
             }
         };
         mRecyclerView.setAdapter(mAdapter);

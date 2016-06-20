@@ -77,7 +77,7 @@ public class CreateIngredientsActivity extends AppCompatActivity implements View
             if (!oldIngredients.isEmpty()) {
                 for (Ingredients.Ingredient ingredient : newIngredients) {
 //                System.out.println("MEOW CAKE IS GOOD " + ingredient.getIngredient());
-                    addEditTextViewToDragLinearLayout(ingredient.getQuantity() + ingredient.getMeasure() + ingredient.getIngredient());
+                    addEditTextViewToDragLinearLayout(ingredient.getIngredient());
                 }
             } else {
                 addEmptyEditTextView();
@@ -241,7 +241,7 @@ public class CreateIngredientsActivity extends AppCompatActivity implements View
                     if (!isEditTextEmpty(editTextChild)) {
 //                        newIngredients.add(decodeIngredientString(editTextChild.getText().toString()));
 //                        decodeString(editTextChild.getText().toString());
-                        newIngredients.add(new Ingredients.Ingredient("", "", editTextChild.getText().toString()));
+                        newIngredients.add(new Ingredients.Ingredient(editTextChild.getText().toString()));
                     }
                 }
 

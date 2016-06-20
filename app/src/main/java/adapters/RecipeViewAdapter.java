@@ -69,6 +69,8 @@ public class RecipeViewAdapter extends RecyclerView.Adapter<RecipeViewAdapter.Re
         Picasso.with(mContext)
                 .load(item.getImageResId())
                 .into(holder.thumbnail);
+
+//        Picasso.with(mContext).lo
         holder.progress.setText(item.getProgress());
         holder.timer.setText(item.getTime());
     }

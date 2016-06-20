@@ -1,7 +1,7 @@
 <android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:card_view="http://schemas.android.com/apk/res-auto"
     android:id="@+id/card_view"
-    android:layout_width="@dimen/recipe_gallery_item_card_view_width"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginBottom="@dimen/recipe_gallery_item_card_view_margin_bottom"
     android:clickable="true"
@@ -17,7 +17,8 @@
         <ImageView
             android:id="@+id/recipe_thumbnail"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="150dp"
+
             android:scaleType="fitXY" />
 
         <TextView

@@ -15,39 +15,17 @@ public class Ingredients {
     public ArrayList<Ingredient> results;
 
     public static class Ingredient implements Parcelable {
-        public String quantity;
-        public String measure;
         public String ingredient;
 
         public Ingredient() {
         }
 
         private Ingredient(Parcel source) {
-            quantity = source.readString();
-            measure = source.readString();
             ingredient = source.readString();
         }
 
-        public Ingredient(String quantity, String measure, String ingredient) {
-            this.quantity = quantity;
-            this.measure = measure;
+        public Ingredient(String ingredient) {
             this.ingredient = ingredient;
-        }
-
-        public String getQuantity() {
-            return quantity;
-        }
-
-        public void setQuantity(String quantity) {
-            this.quantity = quantity;
-        }
-
-        public String getMeasure() {
-            return measure;
-        }
-
-        public void setMeasure(String measure) {
-            this.measure = measure;
         }
 
         public String getIngredient() {
@@ -65,8 +43,6 @@ public class Ingredients {
 
         @Override
         public void writeToParcel(Parcel dest, int flags) {
-            dest.writeString(quantity);
-            dest.writeString(measure);
             dest.writeString(ingredient);
         }
 

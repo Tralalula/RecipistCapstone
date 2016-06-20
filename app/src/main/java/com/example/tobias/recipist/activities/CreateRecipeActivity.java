@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Typeface;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
@@ -217,7 +218,7 @@ public class CreateRecipeActivity extends BaseActivity implements View.OnClickLi
                 addToLinearLayout(
                         this,
                         mRecipeIngredientsList,
-                        ingredient.getMeasure() + ingredient.getQuantity() + ingredient.getIngredient(),
+                        ingredient.getIngredient(),
                         Typeface.NORMAL
                 );
             }
@@ -254,7 +255,7 @@ public class CreateRecipeActivity extends BaseActivity implements View.OnClickLi
 
         String image = null;
         if (mRecipeBitmapImage != null && !mRecipeBitmapImage.isRecycled()) {
-            image = mCamera.decodeBitmapToBase64String(mRecipeBitmapImage);
+            image = Utilities.decodeBitmapToBase64String(mRecipeBitmapImage);
         }
 //        try {
 //            decodeImage();

@@ -71,7 +71,7 @@ public abstract class FirebaseListFragment extends Fragment {
                     }
                 });
 
-                viewHolder.bindToPost(model, null);
+                viewHolder.bindToPost(mRecyclerView.getContext(), model);
             }
         };
         mRecyclerView.setAdapter(mAdapter);

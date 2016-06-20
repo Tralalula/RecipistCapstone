@@ -6,12 +6,15 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.text.InputType;
+import android.util.Base64;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,6 +22,8 @@ import android.widget.EditText;
 
 import com.example.tobias.recipist.R;
 import com.jmedeisis.draglinearlayout.DragLinearLayout;
+
+import java.io.ByteArrayOutputStream;
 
 /**
  * Created by Tobias on 08-06-2016.
@@ -99,5 +104,32 @@ public class Utilities {
                 return false;
             }
         });
+    }
+
+
+    // http://stackoverflow.com/questions/26292969/can-i-store-image-files-in-firebase-using-java-api
+    public static String decodeDrawableToBase64String(Context context, int drawable) {
+        Bitmap bitmap = BitmapFactory.decodeResource(context.getResources(), drawable);
+        ByteArrayOutputStream byteArrOpStrm = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.PNG, 100, byteArrOpStrm);
+        bitmap.recycle();
+        byte[] bytes = byteArrOpStrm.toByteArray();
+        return Base64.encodeToString(bytes, Base64.DEFAULT);
+    }
+
+    // http://stackoverflow.com/questions/26292969/can-i-store-image-files-in-firebase-using-java-api
+    public static String decodeBitmapToBase64String(Bitmap bitmap) {
+        ByteArrayOutputStream byteArrOpStrm = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.PNG, 100, byteArrOpStrm);
+        bitmap.recycle();
+        byte[] bytes = byteArrOpStrm.toByteArray();
+        return Base64.encodeToString(bytes, Base64.DEFAULT);
+    }
+
+    // http://stackoverflow.com/questions/26292969/can-i-store-image-files-in-firebase-using-java-api
+    public static Bitmap convertBase64ToBitmap(String imageBase64String) {
+        byte[] decodedString = Base64.decode(imageBase64String, Base64.DEFAULT);
+        Bitmap bitmap = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
+        return bitmap;
     }
 }
