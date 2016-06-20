@@ -21,6 +21,7 @@ import com.google.firebase.database.ValueEventListener;
 
 import adapters.MainPageAdapter;
 import fragments.FirebaseListFragment;
+import fragments.RecipesGridFragment;
 import fragments.RecipesListFragment;
 
 public class MainActivity extends AppCompatActivity {
@@ -37,11 +38,13 @@ public class MainActivity extends AppCompatActivity {
 //        MainPageAdapter mainPageAdapter = new MainPageAdapter(getSupportFragmentManager());
         FragmentPagerAdapter mainPageAdapter = new FragmentPagerAdapter(getSupportFragmentManager()) {
             private final Fragment[] mFragments = new Fragment[]{
-                    new RecipesListFragment()
+                    new RecipesListFragment(),
+                    new RecipesGridFragment()
             };
 
             private final String[] mFragmentNames = new String[]{
-              "List"
+                    "List",
+                    "Gallery"
             };
 
             @Override
