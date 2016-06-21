@@ -10,18 +10,32 @@
     android:gravity="center_vertical|start"
     android:orientation="horizontal">
 
-    <ImageView
-        android:id="@+id/recipe_thumbnail"
+    <RelativeLayout
+        android:id="@+id/thumbnail_container"
         android:layout_width="@dimen/recipe_list_item_thumbnail_width"
-        android:layout_height="@dimen/recipe_list_item_thumbnail_height"
-        android:scaleType="fitXY"
-        android:src="@android:drawable/ic_menu_edit" />
+        android:layout_height="@dimen/recipe_list_item_thumbnail_height">
+
+        <ImageView
+            android:id="@+id/recipe_thumbnail"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scaleType="fitXY"
+            android:visibility="gone" />
+
+        <TextView
+            android:id="@+id/recipe_nothumbnail"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:text="Image is not available"
+            android:visibility="visible" />
+    </RelativeLayout>
 
     <TextView
         android:id="@+id/recipe_title"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
-        android:layout_toEndOf="@+id/recipe_thumbnail"
+        android:layout_toEndOf="@+id/thumbnail_container"
         android:paddingEnd="@dimen/recipe_list_item_title_padding_horizontal"
         android:paddingStart="@dimen/recipe_list_item_title_padding_horizontal"
         android:textSize="@dimen/recipe_list_item_title_text_size" />
@@ -36,6 +50,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
+            android:drawableEnd="@drawable/ic_access_time_black_24dp"
             android:paddingEnd="@dimen/recipe_list_item_time_padding_horizontal"
             android:paddingStart="@dimen/recipe_list_item_time_padding_horizontal"
             android:textSize="@dimen/recipe_list_item_time_text_size" />

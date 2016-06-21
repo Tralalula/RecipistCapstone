@@ -14,18 +14,32 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <ImageView
-            android:id="@+id/recipe_thumbnail"
+        <RelativeLayout
+            android:id="@+id/thumbnail_container"
             android:layout_width="match_parent"
-            android:layout_height="150dp"
+            android:layout_height="match_parent">
 
-            android:scaleType="fitXY" />
+            <ImageView
+                android:id="@+id/recipe_thumbnail"
+                android:layout_width="match_parent"
+                android:layout_height="150dp"
+                android:scaleType="fitXY"
+                android:visibility="gone" />
+
+            <TextView
+                android:id="@+id/recipe_nothumbnail"
+                android:layout_width="match_parent"
+                android:layout_height="150dp"
+                android:gravity="center"
+                android:text="Image is not available"
+                android:visibility="visible" />
+        </RelativeLayout>
 
         <TextView
             android:id="@+id/recipe_title"
             android:layout_width="match_parent"
             android:layout_height="@dimen/recipe_gallery_item_title_height"
-            android:layout_below="@+id/recipe_thumbnail"
+            android:layout_below="@+id/thumbnail_container"
             android:background="@color/recipeGalleryItemBackground"
             android:padding="@dimen/recipe_gallery_item_title_padding"
             android:textColor="@color/textColorPrimary"
@@ -52,6 +66,7 @@
                 android:layout_height="wrap_content"
                 android:layout_toEndOf="@+id/recipe_progress"
                 android:background="@color/recipeGalleryItemBackground"
+                android:drawableEnd="@drawable/ic_access_time_black_24dp"
                 android:gravity="end"
                 android:padding="@dimen/recipe_gallery_item_time_padding"
                 android:textColor="@color/textColorSecondary"
