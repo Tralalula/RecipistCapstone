@@ -7,6 +7,7 @@ import android.graphics.Bitmap;
 import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.SystemClock;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.widget.Toolbar;
@@ -65,6 +66,9 @@ public class CreateRecipeActivity extends BaseActivity implements View.OnClickLi
 
     private LinearLayout mRecipeStepsList;
 
+    private boolean editMode;
+    private String mRecipeKey;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -86,6 +90,16 @@ public class CreateRecipeActivity extends BaseActivity implements View.OnClickLi
         mSaveRecipe = (FloatingActionButton) findViewById(R.id.save_recipe);
 
         mRecipeStepsList = (LinearLayout) findViewById(R.id.recipe_steps_list);
+
+        Recipe r = getIntent().getParcelableExtra("EDIT RECIPE");
+        mRecipeKey = getIntent().getStringExtra("RECIPE KEY");
+        if (r != null && mRecipeKey != null) {
+            editMode = true;
+            System.out.println("EDIT RECIPE " + r.title);
+            System.out.println("RECIPE KEY " + mRecipeKey);
+
+            handleEditRecipeMode(r);
+        }
 
 //        Ingredients.Ingredient ingredient = new Ingredients.Ingredient("100", "grams", "sugar");
 //        ingredients.add(ingredient);
@@ -121,6 +135,30 @@ public class CreateRecipeActivity extends BaseActivity implements View.OnClickLi
 //
 //
 //        writeNewRecipe("Test", mCamera.decodeDrawableToBase64String(R.drawable.a), true, 60, "8-12", i, s);
+    }
+
+    private void handleEditRecipeMode(Recipe recipe) {
+        String image = recipe.image;
+        String title = recipe.title;
+        String time = recipe.time;
+        String servings = recipe.servings;
+
+        ingredients = recipe.ingredients;
+        steps = recipe.steps;
+
+        if (!Utilities.isNullOrEmpty(image)) {
+            Bitmap bitmap = Utilities.convertBase64ToBitmap(image);
+            mRecipeImage.setImageBitmap(bitmap);
+            mRecipeBitmapImage = bitmap;
+        }
+
+        if (!Utilities.isNullOrEmpty(title)) mRecipeTitle.setText(title);
+        if (!Utilities.isNullOrEmpty(time)) mRecipeTime.setText(time);
+        if (!Utilities.isNullOrEmpty(servings)) mRecipeServings.setText(servings);
+        mRecipeProgress.setChecked(recipe.progress);
+
+        updateIngredients();
+        updateSteps();
     }
 
     @Override
@@ -273,7 +311,10 @@ public class CreateRecipeActivity extends BaseActivity implements View.OnClickLi
 
     private void writeNewRecipe(String title, String image, boolean progress, String time,
                                 String servings, ArrayList<Ingredients.Ingredient> ingredients, ArrayList<Steps.Step> steps) {
-        String key = mDatabase.child("recipes").push().getKey();
+        String key;
+        if (!editMode) key = mDatabase.child("recipes").push().getKey();
+        else key = mRecipeKey;
+
         Recipe recipe = new Recipe(
                 title,
                 image,

@@ -1,8 +1,10 @@
 package com.example.tobias.recipist.activities;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Html;
 import android.util.Log;
@@ -30,7 +32,7 @@ import util.Utilities;
 /**
  * Created by Tobias on 08-06-2016.
  */
-public class ViewRecipeActivity extends AppCompatActivity {
+public class ViewRecipeActivity extends AppCompatActivity implements View.OnClickListener {
     private static final String TAG = ViewRecipeActivity.class.toString();
 
     private DatabaseReference mRecipeReference;
@@ -47,6 +49,10 @@ public class ViewRecipeActivity extends AppCompatActivity {
     private TextView mRecipeServings;
     private LinearLayout mRecipeIngredientsList;
     private LinearLayout mRecipeStepsList;
+
+    private FloatingActionButton mFabEditRecipe;
+
+    private Recipe mRecipe;
 
 
     @Override
@@ -77,6 +83,11 @@ public class ViewRecipeActivity extends AppCompatActivity {
 
         mRecipeIngredientsList = (LinearLayout) findViewById(R.id.recipe_ingredients_list);
         mRecipeStepsList = (LinearLayout) findViewById(R.id.recipe_steps_list);
+
+        mFabEditRecipe = (FloatingActionButton) findViewById(R.id.edit_recipe);
+
+        // Initialize click listeners
+        if (mFabEditRecipe != null) mFabEditRecipe.setOnClickListener(this);
     }
 
     @Override
@@ -88,17 +99,17 @@ public class ViewRecipeActivity extends AppCompatActivity {
             public void onDataChange(DataSnapshot dataSnapshot) {
                 String notSpecified = getString(R.string.not_specified);
 
-                Recipe recipe = dataSnapshot.getValue(Recipe.class);
-                String image = recipe.image;
-                String title = recipe.title;
-                String time = recipe.time;
-                String servings = recipe.servings;
+                mRecipe = dataSnapshot.getValue(Recipe.class);
+                String image = mRecipe.image;
+                String title = mRecipe.title;
+                String time = mRecipe.time;
+                String servings = mRecipe.servings;
 
-                boolean progress = recipe.progress;
+                boolean progress = mRecipe.progress;
                 String progressText;
 
-                ArrayList<Ingredients.Ingredient> ingredients = recipe.ingredients;
-                ArrayList<Steps.Step> steps = recipe.steps;
+                ArrayList<Ingredients.Ingredient> ingredients = mRecipe.ingredients;
+                ArrayList<Steps.Step> steps = mRecipe.steps;
 
                 if (Utilities.isNullOrEmpty(image)) {
                     mRecipeImage.setVisibility(View.GONE);
@@ -123,6 +134,18 @@ public class ViewRecipeActivity extends AppCompatActivity {
 
                 handleIngredients(mRecipeIngredientsList, ingredients);
                 handleSteps(mRecipeStepsList, steps);
+
+//                Recipe r = new Recipe(
+//                        "Pancakes",
+//                        image,
+//                        progress,
+//                        time,
+//                        servings,
+//                        ingredients,
+//                        steps
+//                );
+//
+//                mRecipeReference.setValue(r);
             }
 
             @Override
@@ -146,6 +169,18 @@ public class ViewRecipeActivity extends AppCompatActivity {
         super.onStop();
 
         if (mRecipeListener != null) mRecipeReference.removeEventListener(mRecipeListener);
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.edit_recipe:
+                Intent intent = new Intent(ViewRecipeActivity.this, CreateRecipeActivity.class);
+                intent.putExtra("EDIT RECIPE", mRecipe);
+                intent.putExtra("RECIPE KEY", mRecipeKey);
+                startActivity(intent);
+                break;
+        }
     }
 
     private void handleIngredients(LinearLayout linearLayout, ArrayList<Ingredients.Ingredient> ingredients) {
