@@ -1,6 +1,24 @@
 <resources>
+    <!-- Universal -->
     <string name="app_name">Recipist</string>
+    <string name="not_specified" translatable="true">Not specified</string>
 
     <string name="gallery_view_page_title">Gallery</string>
     <string name="list_view_page_title">List</string>
+
+    <!-- Firebase Database -->
+    <string name="firebase_database_recipes">recipes</string>
+    <string name="firebase_database_users">users</string>
+
+
+    <!-- ViewRecipe-->
+    <string name="view_recipe_progress_true" translatable="true">Completed</string>
+    <string name="view_recipe_progress_false" translatable="true">In Progress</string>
+
+    <string name="view_recipe_load_recipe_on_cancelled_toast_text" translatable="true">Failed to load recipe!</string>
+
+    <string name="view_recipe_load_recipe_on_cancelled_database_error" translatable="false">loadRecipe:onCancelled</string>
+
+    <!-- Errors -->
+    <string name="error_view_recipe_activity_intent_is_null" translatable="false">Must pass RECIPE KEY</string>
 </resources>

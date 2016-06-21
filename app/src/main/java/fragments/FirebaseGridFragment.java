@@ -13,6 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.tobias.recipist.R;
+import com.example.tobias.recipist.activities.CreateRecipeActivity;
 import com.example.tobias.recipist.activities.ViewRecipeActivity;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.google.firebase.auth.FirebaseAuth;
@@ -21,6 +22,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 
 import data.Recipe;
+import util.Utilities;
 import viewholders.RecipeViewHolder;
 
 /**
@@ -79,7 +81,7 @@ public abstract class FirebaseGridFragment extends Fragment {
                     @Override
                     public void onClick(View v) {
                         Intent intent = new Intent(getActivity(), ViewRecipeActivity.class);
-                        intent.putExtra("RECIPE KEY", recipeKey);
+                        intent.putExtra(Utilities.VIEW_RECIPE_ACTIVITY_RECIPE_KEY, recipeKey);
                         startActivity(intent);
                     }
                 });

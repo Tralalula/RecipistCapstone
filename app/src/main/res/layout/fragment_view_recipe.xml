@@ -25,7 +25,16 @@
                 android:layout_height="match_parent"
                 android:scaleType="centerCrop"
                 android:transitionName="test"
+                android:visibility="gone"
                 app:layout_collapseMode="parallax" />
+
+            <TextView
+                android:id="@+id/image_not_available"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:text="Image is not available"
+                android:visibility="visible" />
 
             <android.support.v7.widget.Toolbar
                 android:id="@+id/app_bar"
@@ -82,6 +91,8 @@
                     android:layout_height="wrap_content"
                     android:text="6h"
                     android:textColor="@color/textColorSecondary"
+                    android:layout_marginEnd="16dp"
+                    android:drawableStart="@drawable/ic_access_time_black_24dp"
                     android:textSize="@dimen/view_recipe_time_text_size" />
 
                 <TextView
@@ -90,6 +101,7 @@
                     android:layout_height="wrap_content"
                     android:text="8-12"
                     android:textColor="@color/textColorSecondary"
+                    android:drawableStart="@drawable/ic_people_black_24dp"
                     android:textSize="@dimen/view_recipe_servings_text_size" />
             </LinearLayout>
 
@@ -114,86 +126,31 @@
                     android:layout_height="wrap_content"
                     android:background="@drawable/border"
                     android:orientation="vertical"
-                    android:padding="4dp">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="5 pounds apples, peeled, cored, and sliced 1/2 inch thick"
-                        android:textColor="@color/textColorSecondary"
-                        android:textSize="@dimen/view_recipe_ingredient_text_size" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="100-150g sugar, plus more for sprinkling"
-                        android:textColor="@color/textColorSecondary"
-                        android:textSize="@dimen/view_recipe_ingredient_text_size" />
-                </LinearLayout>
+                    android:padding="4dp" />
             </LinearLayout>
 
             <LinearLayout
-                android:id="@+id/recipe_method"
+                android:id="@+id/recipe_steps"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/recipe_ingredients"
                 android:orientation="vertical">
 
                 <TextView
-                    android:id="@+id/recipe_method_title"
+                    android:id="@+id/recipe_steps_title"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Method"
+                    android:text="Steps"
                     android:textColor="@color/textColorPrimary"
-                    android:textSize="@dimen/view_recipe_method_title_text_size" />
+                    android:textSize="@dimen/view_recipe_ingredients_title_text_size" />
 
-                <RelativeLayout
-                    android:id="@+id/recipe_method_item"
+                <LinearLayout
+                    android:id="@+id/recipe_steps_list"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@drawable/border"
-                    android:padding="4dp"
-                    android:textColor="@color/textColorSecondary">
-
-                    <TextView
-                        android:id="@+id/recipe_method_number"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:background="@drawable/method_number"
-                        android:paddingBottom="3dp"
-                        android:paddingEnd="6dp"
-                        android:paddingStart="6dp"
-                        android:paddingTop="3dp"
-                        android:layout_marginEnd="8dp"
-                        android:text="1"
-                        android:textColor="@android:color/white"
-                        android:textSize="@dimen/view_recipe_method_number_text_size" />
-
-                    <TextView
-                        android:id="@+id/recipe_method_text"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_toEndOf="@+id/recipe_method_number"
-                        android:text="Adjust oven rack to lower middle position and place a heavy rimmed baking sheet on it. Preheat oven to 425F (220C). Toss apple slices with sugar, cornstarch, cinnamon, and lemon juice and zest untill well-coated. Let rest for 10 minutes"
-                        android:textColor="@color/textColorSecondary"
-                        android:textSize="@dimen/view_recipe_method_text_size" />
-
-                    <ImageView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@+id/recipe_method_text"
-                        android:layout_toEndOf="@+id/recipe_method_number"
-                        android:src="@drawable/b" />
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@+id/recipe_method_number"
-                        android:layout_toStartOf="@+id/recipe_method_text"
-                        android:text="23h59m"
-                        android:textColor="@color/textColorSecondary"
-                        android:textSize="@dimen/view_recipe_method_timer_text_size" />
-                </RelativeLayout>
+                    android:orientation="vertical"
+                    android:padding="4dp" />
             </LinearLayout>
         </RelativeLayout>
     </ScrollView>

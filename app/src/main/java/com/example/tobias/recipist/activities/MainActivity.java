@@ -54,14 +54,12 @@ public class MainActivity extends AppCompatActivity {
         FragmentPagerAdapter mainPageAdapter = new FragmentPagerAdapter(getSupportFragmentManager()) {
             private final Fragment[] mFragments = new Fragment[]{
                     new RecipesListFragment(),
-                    new RecipesGridFragment(),
-                    new GalleryViewFragment()
+                    new RecipesGridFragment()
             };
 
             private final String[] mFragmentNames = new String[]{
                     "List",
-                    "Gallery",
-                    "Gallery2"
+                    "Gallery"
             };
 
             @Override

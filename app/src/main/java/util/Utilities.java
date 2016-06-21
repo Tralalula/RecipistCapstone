@@ -6,6 +6,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.pm.PackageManager;
+import android.content.res.ColorStateList;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.Drawable;
@@ -14,13 +15,17 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.text.InputType;
+import android.text.Spanned;
+import android.text.TextUtils;
 import android.util.Base64;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import com.example.tobias.recipist.R;
+import com.example.tobias.recipist.activities.ViewRecipeActivity;
 import com.jmedeisis.draglinearlayout.DragLinearLayout;
 
 import java.io.ByteArrayOutputStream;
@@ -29,6 +34,8 @@ import java.io.ByteArrayOutputStream;
  * Created by Tobias on 08-06-2016.
  */
 public class Utilities {
+    public static final String VIEW_RECIPE_ACTIVITY_RECIPE_KEY = ViewRecipeActivity.class + "RECIPE KEY";
+
 
     public static final int TOOLBAR_NAVIGATION_ICON_CLICK_ID = 16908332;
 
@@ -131,5 +138,32 @@ public class Utilities {
         byte[] decodedString = Base64.decode(imageBase64String, Base64.DEFAULT);
         Bitmap bitmap = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
         return bitmap;
+    }
+
+    public static boolean isNullOrEmpty(String string) {
+        return (string == null || TextUtils.isEmpty(string));
+    }
+
+
+    public static TextView newTextView(Context context, ViewGroup.LayoutParams layoutParams, String text, int textColor) {
+        TextView textView = new TextView(context);
+        textView.setLayoutParams(layoutParams);
+        textView.setText(text);
+        textView.setTextColor(textColor);
+
+        return textView;
+    }
+
+    public static TextView newTextView(Context context, ViewGroup.LayoutParams layoutParams, Spanned text, int textColor) {
+        TextView textView = new TextView(context);
+        textView.setLayoutParams(layoutParams);
+        textView.setText(text);
+        textView.setTextColor(textColor);
+
+        return textView;
+    }
+
+    public static void addTextView(ViewGroup parent, TextView textView) {
+        parent.addView(textView);
     }
 }
