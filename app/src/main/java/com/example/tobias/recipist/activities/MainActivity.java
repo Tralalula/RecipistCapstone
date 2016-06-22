@@ -1,8 +1,11 @@
 package com.example.tobias.recipist.activities;
 
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
@@ -14,6 +17,7 @@ import android.support.v7.widget.Toolbar;
 import android.util.Base64;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import com.example.tobias.recipist.R;
 import com.google.firebase.database.DataSnapshot;
@@ -39,14 +43,49 @@ import fragments.RecipesListFragment;
 import pub.devrel.easypermissions.EasyPermissions;
 
 public class MainActivity extends AppCompatActivity {
-    private DatabaseReference mRootRef = FirebaseDatabase.getInstance().getReference();
-    private DatabaseReference mConditionRef = mRootRef.child("condition");
+//    private FirebaseDatabase firebaseDatabase;
+//    private DatabaseReference mRootRef;
+//    private DatabaseReference mConditionRef;
 
     private StorageReference mStorageRef;
+
+    private boolean mCalledAlready;
+
+    @SuppressWarnings("deprecation")
+    private boolean isNetworkAvailable() {
+        boolean wifiConnection = false;
+        boolean mobileConnection = false;
+
+        ConnectivityManager connectivityManager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo[] netInfo = connectivityManager.getAllNetworkInfo();
+        for (NetworkInfo ni : netInfo) {
+            if (ni.getTypeName().equalsIgnoreCase("WIFI"))
+                if (ni.isConnected())
+                    wifiConnection = true;
+            if (ni.getTypeName().equalsIgnoreCase("MOBILE"))
+                if (ni.isConnected())
+                    mobileConnection = true;
+        }
+        return wifiConnection || mobileConnection;
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+
+
+//        if (!isNetworkAvailable()) {
+//            Toast.makeText(MainActivity.this, "Network is available", Toast.LENGTH_LONG).show();
+//        } else {
+//            Toast.makeText(MainActivity.this, "Network is not available", Toast.LENGTH_LONG).show();
+//        }
+
+
+        DatabaseReference mRootRef = FirebaseDatabase.getInstance().getReference();
+        DatabaseReference mConditionRef = mRootRef.child("condition");
+
         Toolbar toolbar = (Toolbar) findViewById(R.id.my_toolbar);
         setSupportActionBar(toolbar);
 
@@ -152,22 +191,22 @@ public class MainActivity extends AppCompatActivity {
         );
     }
 
-    @Override
-    protected void onStart() {
-        super.onStart();
-
-        mConditionRef.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
-        });
-    }
+//    @Override
+//    protected void onStart() {
+//        super.onStart();
+//
+//        mConditionRef.addValueEventListener(new ValueEventListener() {
+//            @Override
+//            public void onDataChange(DataSnapshot dataSnapshot) {
+//
+//            }
+//
+//            @Override
+//            public void onCancelled(DatabaseError databaseError) {
+//
+//            }
+//        });
+//    }
 
 //    private void writeNewRecipe(String recipeId, String title, String image, boolean progress, int time, String servings, List<Ingredient> ingredients, List<Step> steps) {
 //        Recipe recipe = new Recipe(title, image, progress, time, servings, ingredients, steps);

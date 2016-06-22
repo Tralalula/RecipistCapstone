@@ -20,6 +20,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 
 import data.Recipe;
+import util.FirebaseUtil;
 import util.Utilities;
 import viewholders.RecipeViewHolder;
 
@@ -38,7 +39,7 @@ public abstract class FirebaseListFragment extends Fragment {
         super.onCreateView(inflater, container, savedInstanceState);
         View rootView = inflater.inflate(R.layout.fragment_list_view, container, false);
 
-        mDatabase = FirebaseDatabase.getInstance().getReference();
+        mDatabase = FirebaseUtil.getBaseRef();
 
         mRecyclerView = (RecyclerView) rootView.findViewById(R.id.rec_list);
         mRecyclerView.setHasFixedSize(true);

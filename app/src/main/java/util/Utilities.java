@@ -6,7 +6,6 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.pm.PackageManager;
-import android.content.res.ColorStateList;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.Drawable;
@@ -24,9 +23,7 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import com.example.tobias.recipist.R;
 import com.example.tobias.recipist.activities.ViewRecipeActivity;
-import com.jmedeisis.draglinearlayout.DragLinearLayout;
 
 import java.io.ByteArrayOutputStream;
 

@@ -22,6 +22,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 
 import data.Recipe;
+import util.FirebaseUtil;
 import util.Utilities;
 import viewholders.RecipeViewHolder;
 
@@ -31,6 +32,7 @@ import viewholders.RecipeViewHolder;
 public abstract class FirebaseGridFragment extends Fragment {
     private int PORTRAIT_NUM_OF_RECIPES = 2;
     private int LANDSCAPE_NUM_OF_RECIPES = 3;
+
 
     private DatabaseReference mDatabase;
 
@@ -43,8 +45,7 @@ public abstract class FirebaseGridFragment extends Fragment {
         super.onCreateView(inflater, container, savedInstanceState);
         View rootView = inflater.inflate(R.layout.fragment_gallery_view, container, false);
 
-
-        mDatabase = FirebaseDatabase.getInstance().getReference();
+        mDatabase = FirebaseUtil.getBaseRef();
 
         mRecyclerView = (RecyclerView) rootView.findViewById(R.id.recycler_view);
         mRecyclerView.setHasFixedSize(true);
