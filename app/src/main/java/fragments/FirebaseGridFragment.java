@@ -29,7 +29,7 @@ import viewholders.RecipeViewHolder;
  * Created by Tobias on 20-06-2016.
  */
 public abstract class FirebaseGridFragment extends Fragment {
-    private int PORTRAIT_NUM_OF_RECIPES = 3;
+    private int PORTRAIT_NUM_OF_RECIPES = 2;
     private int LANDSCAPE_NUM_OF_RECIPES = 3;
 
     private DatabaseReference mDatabase;
